@@ -30,7 +30,7 @@ import { FormattingSettingsService } from "powerbi-visuals-utils-formattingmodel
 import "./../style/visual.less";
 import * as marked from "marked";
 import DOMPurify from "dompurify";
-import "github-markdown-css";      // GitHub's own CSS
+import "github-markdown-css"; 
 
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;

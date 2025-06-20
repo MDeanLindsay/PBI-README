@@ -1,29 +1,50 @@
 # Power BI Markdown Visual
 
-A custom Power BI visual for displaying beautiful, GitHub-styled markdown content with full navigation support.
+A custom Power BI visual for displaying familiar, GitHub-styled markdown content with full navigation support.
 
-## 🌟 Features
-
-- **GitHub-Style Formatting**: Uses authentic GitHub markdown CSS for pixel-perfect rendering
-- **Internal Navigation**: Clickable table of contents with smooth scrolling to sections
-- **Customizable Appearance**: Configurable font size, padding, background color, and font family
-- **Security First**: Built-in XSS protection with DOMPurify sanitization
-- **Full Markdown Support**: 
-  - Headers, lists, tables, code blocks
-  - Links, images, blockquotes
-  - GitHub Flavored Markdown (GFM)
-- **Responsive Design**: Adapts to different visual sizes in Power BI reports
-
-## 📖 Use Cases
-
-Perfect for creating:
+Perfect for rendering:
 - **Documentation dashboards** - Display project docs, API references, user guides
-- **Executive summaries** - Rich-text reports with navigation
 - **Release notes** - Formatted changelog displays
-- **Process documentation** - Step-by-step guides with internal linking
 - **Data dictionaries** - Searchable, navigable field definitions
 
-## 🚀 Getting Started
+## Features
+
+- **GitHub-Style Formatting**: Uses authentic GitHub markdown CSS for pixel-perfect rendering
+- **Responsive Design**: Adapts to different visual sizes in Power BI reports
+- **Full Markdown Support**: 
+  - Headers, indexes, lists, tables, code blocks
+  - Links, images, blockquotes
+
+### Internal Navigation
+
+The visual automatically generates clickable navigation from markdown headers:
+
+```markdown
+## Table of Contents
+* [Section 1](#section-1)
+* [Section 2](#section-2)
+
+## Section 1
+Content here...
+
+## Section 2
+More content...
+```
+
+Features:
+- Smooth scrolling animation
+- Visual highlighting of target sections
+- Automatic anchor ID generation
+- Nested navigation support
+
+### Security
+
+- Input sanitization with DOMPurify
+- Restricted HTML tag allowlist
+- Safe attribute filtering
+- XSS attack prevention
+
+## Getting Started
 
 ### Using the Visual
 
@@ -34,7 +55,7 @@ Perfect for creating:
 
 ### Data Requirements
 
-The visual expects a single text field containing valid markdown:
+The visual expects a single text field containing valid markdown.(No, you can't use measures. Put it in a table.)
 
 ```markdown
 # My Report
@@ -67,7 +88,7 @@ Access these settings in Power BI's formatting pane:
 | Background Color | Visual background color | Transparent |
 | Font Family | Choose from 8 font options | System Default |
 
-## 🛠️ Development
+## Development
 
 ### Prerequisites
 
@@ -85,14 +106,14 @@ cd PBI-README/README
 npm install
 
 # Start development server
-npm start
+pbiviz start
 ```
 
 ### Build for Production
 
 ```bash
 # Create .pbiviz package
-npm run package
+pbiviz package
 ```
 
 ### Project Structure
@@ -109,7 +130,7 @@ README/
 └── package.json          # Dependencies
 ```
 
-## 🔧 Technical Details
+## Technical Details
 
 ### Dependencies
 
@@ -118,53 +139,7 @@ README/
 - **dompurify** (^3.2.6) - XSS protection
 - **powerbi-visuals-api** (~5.3.0) - Power BI integration
 
-### Security Features
-
-- Input sanitization with DOMPurify
-- Restricted HTML tag allowlist
-- Safe attribute filtering
-- XSS attack prevention
-
-### Browser Compatibility
-
-- Modern browsers supporting ES6+
-- Power BI Desktop and Service
-- Mobile Power BI apps
-
-## 🔗 Internal Navigation
-
-The visual automatically generates clickable navigation from markdown headers:
-
-```markdown
-## Table of Contents
-* [Section 1](#section-1)
-* [Section 2](#section-2)
-
-## Section 1
-Content here...
-
-## Section 2
-More content...
-```
-
-Features:
-- Smooth scrolling animation
-- Visual highlighting of target sections
-- Automatic anchor ID generation
-- Nested navigation support
-
-## 📝 License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-### Third-Party Licenses
-
-This project includes:
-- `github-markdown-css` (MIT) - Copyright (c) Sindre Sorhus
-- `marked` (MIT) - Copyright (c) 2011-2018, Christopher Jeffrey
-- `dompurify` (Apache-2.0 OR MPL-2.0) - Copyright (c) Cure53
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
@@ -176,24 +151,30 @@ This project includes:
 
 ### v1.0.0
 - Initial release
-- GitHub-style markdown rendering
-- Internal navigation support
-- Customizable formatting options
-- Security hardening with DOMPurify
 
-## 🐛 Known Issues
+## Known Issues
 
 - Internal links require exact header text matching
 - Some advanced markdown features may not render identically to GitHub
-- Large documents may impact performance in older browsers
 
-## 📞 Support
+## Support
 
 For questions, issues, or feature requests:
 1. Check existing [GitHub issues](../../issues)
 2. Create a new issue with detailed description
 3. Include markdown sample and expected vs actual behavior
 
+## License
+
+MIT License
+
+### Third-Party Licenses
+
+This project includes:
+- `github-markdown-css` (MIT) - Copyright (c) Sindre Sorhus
+- `marked` (MIT) - Copyright (c) 2011-2018, Christopher Jeffrey
+- `dompurify` (Apache-2.0 OR MPL-2.0) - Copyright (c) Cure53
+
 ---
 
-**Made with ❤️ for the Power BI community** 
+**Made with ❤️ for those who hate the native Power BI text editor.** 
