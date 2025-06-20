@@ -1,6 +1,6 @@
 {
-  "name": "visual",
-  "description": "default_template_value",
+  "name": "readme",
+  "description": "A Power BI visual for displaying README and Markdown content",
   "version": "1.0.0.0",
   "repository": {
     "type": "default_template_value",

@@ -1,11 +1,11 @@
 {
     "visual": {
-        "name": "markdownViewer",
-        "displayName": "MarkdownViewer",
-        "guid": "markdownViewerC5D23D99479C4478885DD956BB5985F1",
+        "name": "readme",
+        "displayName": "README",
+        "guid": "readmeC5D23D99479C4478885DD956BB5985F1",
         "visualClassName": "Visual",
         "version": "1.0.0.0",
-        "description": "A visual that displays Markdown content.",
+        "description": "A visual for displaying README and Markdown content.",
         "supportUrl": "https://github.com/MDeanLindsay/PBI-README/issues",
         "gitHubUrl": "https://github.com/mdeanlindsay/"
     },
