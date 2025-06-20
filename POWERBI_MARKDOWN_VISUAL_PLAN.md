@@ -135,4 +135,4 @@ Consider:
 Happy building! 🎉 
 
 
-pbiviz package   # creates dist/MarkdownViewer.pbiviz
+pbiviz package  
