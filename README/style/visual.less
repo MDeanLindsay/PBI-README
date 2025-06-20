@@ -21,17 +21,17 @@
     scroll-behavior: smooth;
     
     // Scale everything proportionally based on base font size
-    font-size: var(--base-font-size, 14px);
+    font-size: var(--base-font-size, 16px);
     
-    h1 { font-size: calc(var(--base-font-size, 14px) * 2) !important; }
-    h2 { font-size: calc(var(--base-font-size, 14px) * 1.5) !important; }
-    h3 { font-size: calc(var(--base-font-size, 14px) * 1.25) !important; }
-    h4 { font-size: calc(var(--base-font-size, 14px) * 1.1) !important; }
-    h5 { font-size: calc(var(--base-font-size, 14px) * 1) !important; }
-    h6 { font-size: calc(var(--base-font-size, 14px) * 0.9) !important; }
+    h1 { font-size: calc(var(--base-font-size, 16px) * 2) !important; }
+    h2 { font-size: calc(var(--base-font-size, 16px) * 1.5) !important; }
+    h3 { font-size: calc(var(--base-font-size, 16px) * 1.25) !important; }
+    h4 { font-size: calc(var(--base-font-size, 16px) * 1) !important; }
+    h5 { font-size: calc(var(--base-font-size, 16px) * 0.875) !important; }
+    h6 { font-size: calc(var(--base-font-size, 16px) * 0.85) !important; }
     
     p, li, td, th, span, div, blockquote, code {
-        font-size: var(--base-font-size, 14px) !important;
+        font-size: var(--base-font-size, 16px) !important;
     }
     
     // Enhance internal links styling
@@ -67,10 +67,8 @@
         
         // CSS :target pseudo-class for navigation feedback
         &:target {
-            background-color: #fff3cd;
             padding: 8px 12px;
             border-radius: 4px;
-            border-left: 4px solid #ffc107;
             margin: 8px 0;
             animation: highlight-fade 3s ease-out;
         }
@@ -80,11 +78,11 @@
     @keyframes highlight-fade {
         0% {
             background-color: #fff3cd;
-            border-left-color: #ffc107;
+            border-left: 4px solid #ffc107;
         }
         100% {
             background-color: transparent;
-            border-left-color: transparent;
+            border-left: 4px solid transparent;
         }
     }
     
