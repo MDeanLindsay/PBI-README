@@ -34,6 +34,34 @@
         font-size: var(--base-font-size, 16px) !important;
     }
     
+    // Mixin for consistent list styling
+    .list-base() {
+        list-style: initial !important;
+        margin: 16px 0 !important;
+        padding-left: 2em !important;
+    }
+    
+    .list-item-base() {
+        display: list-item !important;
+        margin: 0.25em 0 !important;
+    }
+    
+    // Apply to all lists
+    ul, ol {
+        .list-base();
+    }
+    
+    li {
+        .list-item-base();
+    }
+    
+    // List type specific styles
+    ul li { list-style-type: disc !important; }
+    ol li { list-style-type: decimal !important; }
+    ul ul li { list-style-type: circle !important; }
+    ul ul ul li { list-style-type: square !important; }
+    ol ol li { list-style-type: lower-alpha !important; }
+    
     // Enhance internal links styling
     a[href^="#"] {
         color: #0366d6;
