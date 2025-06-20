@@ -91,7 +91,9 @@ export class Visual implements IVisual {
         // 5️⃣ Apply formatting pane settings if available
         if (this.formattingSettings?.viewerCard) {
             const viewer = this.formattingSettings.viewerCard;
+            
             if (viewer.fontSize?.value !== undefined) {
+                this.target.style.setProperty('--base-font-size', `${viewer.fontSize.value}px`);
                 this.target.style.fontSize = `${viewer.fontSize.value}px`;
             }
             if (viewer.padding?.value !== undefined) {

@@ -17,32 +17,17 @@
     padding: 8px;
     background: transparent;
     
-    // Force list styles to be visible
-    ul {
-        list-style-type: disc !important;
-        margin-left: 1.5em !important;
-        padding-left: 0 !important;
-        
-        li {
-            display: list-item !important;
-            margin: 0.25em 0 !important;
-        }
-        
-        ul {
-            list-style-type: circle !important;
-            margin-top: 0.25em !important;
-            margin-bottom: 0.25em !important;
-        }
-    }
+    // Scale everything proportionally based on base font size
+    font-size: var(--base-font-size, 14px);
     
-    ol {
-        list-style-type: decimal !important;
-        margin-left: 1.5em !important;
-        padding-left: 0 !important;
-        
-        li {
-            display: list-item !important;
-            margin: 0.25em 0 !important;
-        }
+    h1 { font-size: calc(var(--base-font-size, 14px) * 2) !important; }
+    h2 { font-size: calc(var(--base-font-size, 14px) * 1.5) !important; }
+    h3 { font-size: calc(var(--base-font-size, 14px) * 1.25) !important; }
+    h4 { font-size: calc(var(--base-font-size, 14px) * 1.1) !important; }
+    h5 { font-size: calc(var(--base-font-size, 14px) * 1) !important; }
+    h6 { font-size: calc(var(--base-font-size, 14px) * 0.9) !important; }
+    
+    p, li, td, th, span, div, blockquote, code {
+        font-size: var(--base-font-size, 14px) !important;
     }
 } 
