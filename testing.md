@@ -1,193 +1,333 @@
-# CRM Report: Data Definitions and Metrics
+# Comprehensive Markdown Example Document
 
 ## Table of Contents
-* [Report Filters](#report-filters)
-* [Report Usage](#report-usage)
-* [KPI Definitions](#kpi-definitions)
-* [Department Definitions](#department-definitions)
-* [Interpretting Results](#interpretting-results)
-* [Additional Features](#additional-features)
-* [KPI Metrics](#kpi-metrics)
-* [Department Trends](#department-trends)
-* [Averages vs Benchmarks](#averages-vs-benchmarks)
-
-
-## Report Filters
-
-*   **All Stores / Single Store:** 
-    *   These buttons allow you to switch reporting between the banner level and individual store level.
-    *   Please review the bottom of this documentation to understand average differences.
-    *   ![Report Image](https://imgur.com/Y0V7N8O.png)
-*   **Year:** 
-    *   This allows you to filter which year you would like to evaluate.
-    *  ![Year Image](https://imgur.com/SJF5NFm.png)
-*   **Banner:**
-    *   This allows you to filter between NSM and NLCM.
-    *   ![Banner Image](https://imgur.com/yv84sto.png)
-*   **Customer Type:**
-    *   This will allow you to filter between "Loyalty", "Non-Loyalty", and "All" customer types.
-    *   ![Customer Type Image](https://imgur.com/mFyJDVc.png)
-*   **Store:** 
-    *   This allows you to filter by store, and is only availible in the "Single Store" view.
-    *   Only one store's metrics can be displayed at a time.
-    *   ![Store Image](https://imgur.com/o8asS4i.png)
-   
-## Report Usage
-*    **Metric Tiles:**
-     *    Every graph will display the current and previous year's monthly metrics on hover.
-     *    The card underneath is the *year-to-date* summary of that metric.
-     *    ![Metric Rank Image](https://imgur.com/A7jwRMf.png)
-
-*    **Single Store Metric Rankings:** 
-     *    When in the **Single Store** view, you can toggle the information button to compare year-to-date metrics against other stores.
-     *    ![Metric Rank Image](https://imgur.com/AMpg5pv.png)
-
-
-## KPI Definitions
-
-This section includes *monthly* and *yeart-to-date* summaries that breaks down share of target metrics.
-
-### 1. New Enrollments
-
-*   **Description:** 
-    *   Summing the unique count of newly enrolled customers for all locations, including SMS and Website, based on enrollment date.
-
-### 2. Active Customers
-
-*   **Description:** 
-    *   Active customers is how many **unique** customers shopped in the selected period.
-
-### 3. Churn Rate
-
-*   **Description:** 
-    *   Churn Rate is percentage of total customers that did not shop for 28 days after their last purchase. 
-    *   Churn allocation will be applied to the last store someone shopped at when viewing Single Store.
-    *   This metric will populate up until the prior month close, because it is a function of time that has ultimately not occured yet.
-*   **Calculation:** 
-    *   `Churned Customers / Customers`
-  
-### 4. Transactions
-
-*   **Description:** 
-    *   The count of unique transactions in a given time period.
-
-### 5. Average Basket
-
-*   **Description:** 
-    *   The average gross value of a basket, before discount/tax/deposit.
-*   **Calculation:** 
-    *   `Gross Revenue / Transactions`
-### 6. Frequency
-
-*   **Description:** 
-    *   This is how many transactions the average customer made during a given period.
-*   **Calculation:** 
-    *   `Transactions / Customers`
-
-### 7. Offer Redemptions
-
-*   **Description:** 
-    *   This is how many total offers were redeemed. 
-    *   (This does not include the $5 Reward, Birthday Treat, or Bevie Bonus.)
-
-### 8. Offers Redemptions Per Customer
-
-*   **Description:** 
-    *   This is how many total offers were redeemed per customer.
-    *   The goal of this metric is to see how *deeply* customers engaged with the Loyalty program's offers in a given time period.
-    *   (This does not include the $5 Reward, Birthday Treat, or Bevie Bonus.)
-*   **Calculation:** 
-    *   `Offer Redemptions / Redeeming Customers`
-
-### 9. Offer Customer Engagement
-
-*   **Description:** 
-    *   Offer engagement is how many Loyalty customers reedemed an offer out of all actuve Loyalty customers. 
-    *   The goal of this metric is to focus on how *appealing* the Loyalty program's offers were in a given time period.
-    *   (This does not include the $5 Reward, Birthday Treat, or Bevie Bonus.)
-*   **Calculation:** 
-    *   `Redeeming Customers / Customers`
-
-
-## Department Definitions
-
-This section is a *yeart-to-date* summary that breaks down share of cart by content and total revenue contribution by department.
-
-### 1. Revenue:
-*   **Description:** 
-    * The total gross revenue spent in the
-### 2. Transactions:
-*   **Description:** 
-    * The total number of transactions that contained an item from the department. 
-### 3. Avg Basket:
-*   **Description:** 
-    * The average spend per transactions containing an item from the department.
-### 4. Rank: (Single Store View)
-*   **Description:** 
-    * This ranks total gross revenue by department across stores.
-### 5. vs Avg: (Single Store View)
-*   **Description:** 
-    * This compares each metric (Revenue/Transactions/Avg Basket) against other stores' current averages in the department.
-
-
-# Averages vs Benchmarks
-
-There will be two sections in this report: **All Stores** and **Single Store**.
-
-**All Stores** asks: "What is the *customer* average?"
-
-**Single Store** asks: "What is the *store* average?"
-
-## Example
-
-We'll use **Frequency** as an example:
-
-| Customer | Store A | Store B | Store C |
-| :--- | :---: | :---: | :---: |
-| Alice    | 3 | 1 | 0 |
-| Bob      | 2 | 0 | 0 |
-| Charlie  | 1 | 2 | 1 |
+* [Introduction](#introduction)
+* [Getting Started](#getting-started)
+* [Core Features](#core-features)
+  * [Feature Overview](#feature-overview)
+  * [Advanced Capabilities](#advanced-capabilities)
+* [Data Analysis](#data-analysis)
+  * [Performance Metrics](#performance-metrics)
+  * [Statistical Overview](#statistical-overview)
+* [Configuration](#configuration)
+  * [Basic Setup](#basic-setup)
+  * [Advanced Configuration](#advanced-configuration)
+* [API Reference](#api-reference)
+* [Troubleshooting](#troubleshooting)
+* [Best Practices](#best-practices)
+* [Appendix](#appendix)
 
 ---
-**The Customer Average ("All Stores")**
 
-This method puts all trips and all customers into one big pool.
+## Introduction
 
-*   **Total Trips:** 10
-*   **Total Unique Customers:** 3
-*   **Resulting Average:** `10 / 3` = **3.33**
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+### Purpose and Scope
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+**Key Benefits:**
+- Improved efficiency and performance
+- Enhanced user experience
+- Scalable architecture
+- Comprehensive documentation
+
+## Getting Started
+
+### Prerequisites
+
+Before you begin, ensure you have the following:
+
+1. **System Requirements:**
+   - Operating System: Windows 10 or later
+   - Memory: 8GB RAM minimum
+   - Storage: 2GB available space
+
+2. **Software Dependencies:**
+   - Node.js v16.0 or higher
+   - Git version control
+   - Modern web browser
+
+### Quick Start Guide
+
+```bash
+# Clone the repository
+git clone https://github.com/example/project.git
+
+# Navigate to project directory
+cd project
+
+# Install dependencies
+npm install
+
+# Start the application
+npm start
+```
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
+
+## Core Features
+
+### Feature Overview
+
+| Feature | Description | Status | Priority |
+|---------|-------------|--------|----------|
+| Data Visualization | Interactive charts and graphs | ✅ Complete | High |
+| Real-time Updates | Live data synchronization | 🔄 In Progress | High |
+| Export Functionality | PDF and Excel export options | ✅ Complete | Medium |
+| User Management | Role-based access control | ⏳ Planned | Low |
+
+### Advanced Capabilities
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium:
+
+> **Note:** This is an important callout that provides additional context or warnings to the reader.
+
+#### Performance Optimization
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris congue:
+
+- **Caching Strategy**: Implement Redis for session storage
+- **Database Indexing**: Optimize query performance
+- **Content Delivery**: Use CDN for static assets
+- **Load Balancing**: Distribute traffic across multiple servers
+
+#### Security Features
+
+1. **Authentication Methods**
+   - Multi-factor authentication (MFA)
+   - Single sign-on (SSO) integration
+   - OAuth 2.0 support
+
+2. **Data Protection**
+   - End-to-end encryption
+   - Regular security audits
+   - GDPR compliance
+
+## Data Analysis
+
+### Performance Metrics
+
+The following table shows quarterly performance data:
+
+| Quarter | Revenue ($M) | Growth (%) | Users (K) | Conversion Rate (%) |
+|---------|--------------|------------|-----------|-------------------|
+| Q1 2024 | 12.5 | 15.2 | 145.3 | 3.2 |
+| Q2 2024 | 14.8 | 18.4 | 167.8 | 3.7 |
+| Q3 2024 | 16.2 | 9.5 | 182.1 | 4.1 |
+| Q4 2024 | 18.9 | 16.7 | 201.5 | 4.5 |
+
+### Statistical Overview
+
+Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus:
+
+#### Regional Distribution
+
+| Region | Market Share (%) | Active Users | Growth Rate |
+|--------|------------------|--------------|-------------|
+| North America | 45.2 | 234,567 | +12.3% |
+| Europe | 32.8 | 167,890 | +8.7% |
+| Asia Pacific | 18.5 | 95,432 | +23.1% |
+| Other | 3.5 | 18,765 | +5.2% |
+
+## Configuration
+
+### Basic Setup
+
+To configure the basic settings, edit the `config.json` file:
+
+```json
+{
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "name": "production_db"
+  },
+  "cache": {
+    "enabled": true,
+    "ttl": 3600
+  },
+  "logging": {
+    "level": "info",
+    "format": "json"
+  }
+}
+```
+
+### Advanced Configuration
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum:
+
+#### Environment Variables
+
+| Variable | Description | Default Value | Required |
+|----------|-------------|---------------|----------|
+| `API_KEY` | Authentication key for external APIs | - | Yes |
+| `DB_CONNECTION_STRING` | Database connection string | `localhost:5432` | No |
+| `LOG_LEVEL` | Application logging level | `info` | No |
+| `CACHE_ENABLED` | Enable/disable caching | `true` | No |
+
+#### Feature Flags
+
+- `ENABLE_ANALYTICS`: Turn on/off analytics tracking
+- `BETA_FEATURES`: Enable experimental features
+- `MAINTENANCE_MODE`: Put application in maintenance mode
+
+## API Reference
+
+### Authentication
+
+All API requests require authentication using Bearer tokens:
+
+```http
+Authorization: Bearer <your-token-here>
+```
+
+### Endpoints
+
+#### GET /api/v1/users
+
+Retrieves a list of users with pagination support.
+
+**Parameters:**
+- `page` (integer): Page number (default: 1)
+- `limit` (integer): Items per page (default: 20)
+- `sort` (string): Sort field (default: "created_at")
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "id": 123,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "created_at": "2024-01-15T10:30:00Z"
+    }
+  ],
+  "pagination": {
+    "current_page": 1,
+    "total_pages": 5,
+    "total_items": 100
+  }
+}
+```
+
+#### POST /api/v1/users
+
+Creates a new user account.
+
+**Request Body:**
+```json
+{
+  "name": "Jane Smith",
+  "email": "jane@example.com",
+  "role": "user"
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+#### Issue: Application Won't Start
+
+**Symptoms:**
+- Error message: "Port already in use"
+- Application crashes on startup
+
+**Solutions:**
+1. Check if another process is using the port:
+   ```bash
+   netstat -tulpn | grep :3000
+   ```
+2. Change the port in configuration
+3. Kill the conflicting process
+
+#### Issue: Database Connection Failed
+
+**Symptoms:**
+- Connection timeout errors
+- "Database not found" messages
+
+**Solutions:**
+1. Verify database credentials
+2. Check network connectivity
+3. Ensure database service is running
+
+### Error Codes
+
+| Code | Description | Resolution |
+|------|-------------|------------|
+| E001 | Invalid authentication token | Refresh your token |
+| E002 | Rate limit exceeded | Wait before retrying |
+| E003 | Resource not found | Check resource ID |
+| E004 | Insufficient permissions | Contact administrator |
+
+## Best Practices
+
+### Development Guidelines
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium:
+
+1. **Code Quality**
+   - Follow coding standards
+   - Write comprehensive tests
+   - Use meaningful variable names
+   - Document complex logic
+
+2. **Performance Considerations**
+   - Optimize database queries
+   - Implement proper caching
+   - Monitor resource usage
+   - Use lazy loading when appropriate
+
+3. **Security Best Practices**
+   - Validate all user inputs
+   - Use parameterized queries
+   - Implement proper error handling
+   - Regular security updates
+
+### Deployment Checklist
+
+- [ ] All tests passing
+- [ ] Security scan completed
+- [ ] Performance benchmarks met
+- [ ] Documentation updated
+- [ ] Backup procedures verified
+- [ ] Rollback plan prepared
+
+## Appendix
+
+### Glossary
+
+**API (Application Programming Interface)**: A set of protocols and tools for building software applications.
+
+**CDN (Content Delivery Network)**: A system of distributed servers that deliver web content to users based on their geographic location.
+
+**GDPR (General Data Protection Regulation)**: European Union regulation on data protection and privacy.
+
+**OAuth 2.0**: An authorization framework that enables applications to obtain limited access to user accounts.
+
+### Additional Resources
+
+- [Official Documentation](https://docs.example.com)
+- [Community Forum](https://forum.example.com)
+- [GitHub Repository](https://github.com/example/project)
+- [Support Portal](https://support.example.com)
+
+### Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 2.1.0 | 2024-01-15 | Added new analytics features |
+| 2.0.0 | 2023-12-01 | Major UI overhaul |
+| 1.5.2 | 2023-10-15 | Bug fixes and performance improvements |
+| 1.5.0 | 2023-09-01 | New export functionality |
 
 ---
-**The Store Average ("Single Store")**
 
-This method finds the average for each store first, and is the average of averages. It gives every store, big or small, an equal vote.
+*Last updated: January 2024*
 
-*   **Store A Frequency:**
-    *   Trips: 6
-    *   Customers: 3
-    *   Result: `6 / 3` = **2.0**
-
-*   **Store B Frequency:**
-    *   Trips: 3
-    *   Customers: 2
-    *   Result: `3 / 2` = **1.5**
-
-*   **Store C Frequency:**
-    *   Trips: 1
-    *   Customers: 1
-    *   Result: `1 / 1` = **1.0**
-
-Now, we average those individual store results:
-*   **Final Store Average:** `(2.0 + 1.5 + 1.0) / 3` = **1.5**
-
-## The Bottom Line:
-
-Both the **Customer Average (3.33)** and the **Store Average (1.5)** are correct numbers, but they answer different business questions.
-
-*   The **Customer Average** is the best metric for measuring customer behavior. 
-
-*   The **Store Average** is the best metric for creating a fair benchmark to compare stores against each other.
-
-Charting Store A's performance (2.0) against the All Store average (3.33) would be demoralizing and useless, as it's a target that stores can't meet. We need a fair and actionable benchmark, showing how that store is performing relative to its peers. It is very important that you differentiate the two when sharing reporting to a larger audience!
-
---- 
+*For questions or support, contact our team at support@example.com*
