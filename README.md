@@ -31,7 +31,7 @@ Content here...
 More content...
 ```
 
-Features:
+This includes:
 - Smooth scrolling animation
 - Visual highlighting of target sections
 - Automatic anchor ID generation
@@ -55,7 +55,7 @@ Features:
 
 ### Data Requirements
 
-The visual expects a single text field containing valid markdown.(No, you can't use measures. Put it in a table.)
+The visual expects a single text field containing valid markdown. (No, you can't use measures. Put it in a table.)
 
 ```markdown
 # My Report
