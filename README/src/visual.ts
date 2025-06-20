@@ -70,12 +70,14 @@ export class Visual implements IVisual {
             ?.categorical?.categories?.[0]
             ?.values?.[0] as string || "";
 
-        // 2️⃣ Convert Markdown → raw HTML
-        const html = marked.parse(markdown, { 
+        // 2️⃣ Convert Markdown → raw HTML with header IDs enabled
+        marked.use({
+            gfm: true,
             breaks: true,
-            gfm: true,  // GitHub Flavored Markdown
             pedantic: false
-        }) as string;
+        });
+        
+        const html = marked.parse(markdown) as string;
 
         // 3️⃣ Sanitize to avoid XSS
         const safeHtml = DOMPurify.sanitize(html, {
@@ -88,7 +90,10 @@ export class Visual implements IVisual {
         // 4️⃣ Inject into the visual's container
         this.target.innerHTML = safeHtml;
 
-        // 5️⃣ Apply formatting pane settings if available
+        // 5️⃣ Set up internal link navigation
+        this.setupInternalLinks();
+
+        // 6️⃣ Apply formatting pane settings if available
         if (this.formattingSettings?.viewerCard) {
             const viewer = this.formattingSettings.viewerCard;
             
@@ -104,6 +109,50 @@ export class Visual implements IVisual {
             }
             if (viewer.fontFamily?.value) {
                 this.target.style.fontFamily = String(viewer.fontFamily.value);
+            }
+        }
+    }
+
+    /**
+     * Set up click handlers for internal markdown links
+     */
+    private setupInternalLinks(): void {
+        // Find all anchor tags with href starting with #
+        const internalLinks = this.target.querySelectorAll('a[href^="#"]');
+        
+        internalLinks.forEach((link: HTMLAnchorElement) => {
+            link.addEventListener('click', (event: Event) => {
+                // Don't prevent default - let browser handle the hash navigation
+                const targetId = link.getAttribute('href')!.substring(1);
+                
+                // Ensure target element exists, create ID if needed
+                this.ensureTargetExists(targetId);
+                
+                // Use native hash navigation - simplest approach
+                setTimeout(() => {
+                    window.location.hash = targetId;
+                }, 10);
+            });
+        });
+    }
+
+    /**
+     * Ensure target elements have proper IDs for navigation
+     */
+    private ensureTargetExists(targetId: string): void {
+        let targetElement = this.target.querySelector(`#${targetId}`);
+        
+        if (!targetElement) {
+            // Find heading by text content and add ID
+            const headings = this.target.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            for (let i = 0; i < headings.length; i++) {
+                const heading = headings[i];
+                const headingText = heading.textContent?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                if (headingText === targetId) {
+                    heading.id = targetId;
+                    targetElement = heading;
+                    break;
+                }
             }
         }
     }
