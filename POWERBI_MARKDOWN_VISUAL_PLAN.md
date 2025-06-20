@@ -133,3 +133,6 @@ Consider:
 * Visuals API docs – <https://learn.microsoft.com/power-bi/developer/visuals/>
 
 Happy building! 🎉 
+
+
+pbiviz package   # creates dist/MarkdownViewer.pbiviz

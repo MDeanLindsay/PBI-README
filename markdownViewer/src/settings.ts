@@ -72,12 +72,56 @@ class DataPointCardSettings extends FormattingSettingsCard {
 }
 
 /**
+ * Viewer Formatting Card – controls general markdown viewer appearance
+ */
+class ViewerCardSettings extends FormattingSettingsCard {
+    fontSize = new formattingSettings.NumUpDown({
+        name: "fontSize",
+        displayName: "Font size (px)",
+        value: 14
+    });
+
+    padding = new formattingSettings.NumUpDown({
+        name: "padding",
+        displayName: "Padding (px)",
+        value: 4
+    });
+
+    backgroundColor = new formattingSettings.ColorPicker({
+        name: "backgroundColor",
+        displayName: "Background color",
+        value: { value: "#FFFFFF" }
+    });
+
+    fontFamily = new formattingSettings.ItemDropdown({
+        name: "fontFamily",
+        displayName: "Font family",
+        items: [
+            { displayName: "System Default", value: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" },
+            { displayName: "Arial", value: "Arial, sans-serif" },
+            { displayName: "Helvetica", value: "Helvetica, Arial, sans-serif" },
+            { displayName: "Segoe UI", value: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" },
+            { displayName: "Times New Roman", value: "'Times New Roman', Times, serif" },
+            { displayName: "Georgia", value: "Georgia, 'Times New Roman', serif" },
+            { displayName: "Courier New", value: "'Courier New', Courier, monospace" },
+            { displayName: "Verdana", value: "Verdana, Geneva, Tahoma, sans-serif" }
+        ],
+        value: { displayName: "System Default", value: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" }
+    });
+
+    name: string = "viewer";
+    displayName: string = "Viewer";
+    slices: Array<FormattingSettingsSlice> = [this.fontSize, this.padding, this.backgroundColor, this.fontFamily];
+}
+
+/**
 * visual settings model class
 *
 */
 export class VisualFormattingSettingsModel extends FormattingSettingsModel {
     // Create formatting settings model formatting cards
     dataPointCard = new DataPointCardSettings();
+    viewerCard = new ViewerCardSettings();
 
-    cards = [this.dataPointCard];
+    cards = [this.viewerCard, this.dataPointCard];
 }

@@ -16,7 +16,10 @@
   "dependencies": {
     "@types/d3": "7.4.3",
     "d3": "7.9.0",
-    "powerbi-visuals-api": "5.11.0",
+    "dompurify": "^3.2.6",
+    "github-markdown-css": "^5.8.1",
+    "marked": "^15.0.12",
+    "powerbi-visuals-api": "~5.3.0",
     "powerbi-visuals-utils-formattingmodel": "6.0.4"
   },
   "devDependencies": {

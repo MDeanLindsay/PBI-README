@@ -28,6 +28,9 @@
 import powerbi from "powerbi-visuals-api";
 import { FormattingSettingsService } from "powerbi-visuals-utils-formattingmodel";
 import "./../style/visual.less";
+import * as marked from "marked";
+import DOMPurify from "dompurify";
+import "github-markdown-css";      // GitHub's own CSS
 
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
@@ -37,8 +40,6 @@ import { VisualFormattingSettingsModel } from "./settings";
 
 export class Visual implements IVisual {
     private target: HTMLElement;
-    private updateCount: number;
-    private textNode: Text;
     private formattingSettings: VisualFormattingSettingsModel;
     private formattingSettingsService: FormattingSettingsService;
 
@@ -46,24 +47,62 @@ export class Visual implements IVisual {
         console.log('Visual constructor', options);
         this.formattingSettingsService = new FormattingSettingsService();
         this.target = options.element;
-        this.updateCount = 0;
-        if (document) {
-            const new_p: HTMLElement = document.createElement("p");
-            new_p.appendChild(document.createTextNode("Update count:"));
-            const new_em: HTMLElement = document.createElement("em");
-            this.textNode = document.createTextNode(this.updateCount.toString());
-            new_em.appendChild(this.textNode);
-            new_p.appendChild(new_em);
-            this.target.appendChild(new_p);
-        }
+        this.target.classList.add("markdown-body");
+        
+        // Ensure the container has proper dimensions and overflow for scrolling
+        this.target.style.width = "100%";
+        this.target.style.height = "100%";
+        this.target.style.overflow = "auto";
+        this.target.style.boxSizing = "border-box";
     }
 
-    public update(options: VisualUpdateOptions) {
-        this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
+    public update(options: VisualUpdateOptions): void {
+        // Build/refresh formatting settings model from dataView
+        if (options.dataViews && options.dataViews.length > 0) {
+            this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(
+                VisualFormattingSettingsModel,
+                options.dataViews[0]
+            );
+        }
 
-        console.log('Visual update', options);
-        if (this.textNode) {
-            this.textNode.textContent = (this.updateCount++).toString();
+        // 1️⃣ Extract Markdown text from the single row we mapped in capabilities.json
+        const markdown = options?.dataViews?.[0]
+            ?.categorical?.categories?.[0]
+            ?.values?.[0] as string || "";
+
+        // 2️⃣ Convert Markdown → raw HTML
+        const html = marked.parse(markdown, { 
+            breaks: true,
+            gfm: true,  // GitHub Flavored Markdown
+            pedantic: false
+        }) as string;
+
+        // 3️⃣ Sanitize to avoid XSS
+        const safeHtml = DOMPurify.sanitize(html, {
+            ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
+                          'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'a', 'img', 'table', 
+                          'thead', 'tbody', 'tr', 'th', 'td', 'hr', 'del', 'span', 'div'],
+            ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id']
+        });
+        
+        // 4️⃣ Inject into the visual's container
+        this.target.innerHTML = safeHtml;
+
+        // 5️⃣ Apply formatting pane settings if available
+        if (this.formattingSettings?.viewerCard) {
+            const viewer = this.formattingSettings.viewerCard;
+            if (viewer.fontSize?.value !== undefined) {
+                this.target.style.fontSize = `${viewer.fontSize.value}px`;
+            }
+            if (viewer.padding?.value !== undefined) {
+                this.target.style.padding = `${viewer.padding.value}px`;
+            }
+            if (viewer.backgroundColor?.value?.value) {
+                this.target.style.background = viewer.backgroundColor.value.value;
+            }
+            if (viewer.fontFamily?.value) {
+                this.target.style.fontFamily = String(viewer.fontFamily.value);
+            }
         }
     }
 

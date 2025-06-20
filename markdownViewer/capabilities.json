@@ -1,52 +1,48 @@
 {
     "dataRoles": [
         {
-            "displayName": "Category Data",
-            "name": "category",
-            "kind": "Grouping"
-        },
-        {
-            "displayName": "Measure Data",
-            "name": "measure",
-            "kind": "Measure"
+            "name": "Markdown",
+            "kind": "Grouping",
+            "displayName": "Markdown Text"
         }
     ],
     "objects": {
-        "dataPoint": {
+        "viewer": {
+            "displayName": "Viewer",
             "properties": {
-                "defaultColor": {
+                "fontSize": {
+                    "displayName": "Font size (px)",
+                    "type": {
+                        "formatting": { "fontSize": true }
+                    }
+                },
+                "padding": {
+                    "displayName": "Padding (px)",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "backgroundColor": {
+                    "displayName": "Background color",
                     "type": {
                         "fill": {
-                            "solid": {
-                                "color": true
-                            }
+                            "solid": { "color": true }
                         }
                     }
                 },
-                "showAllDataPoints": {
+                "fontFamily": {
+                    "displayName": "Font family",
                     "type": {
-                        "bool": true
-                    }
-                },
-                "fill": {
-                    "type": {
-                        "fill": {
-                            "solid": {
-                                "color": true
-                            }
-                        }
-                    }
-                },
-                "fillRule": {
-                    "type": {
-                        "fill": {}
-                    }
-                },
-                 "fontSize": {
-                    "type": {
-                        "formatting": {
-                            "fontSize": true
-                        }
+                        "enumeration": [
+                            { "displayName": "System Default", "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" },
+                            { "displayName": "Arial", "value": "Arial, sans-serif" },
+                            { "displayName": "Helvetica", "value": "Helvetica, Arial, sans-serif" },
+                            { "displayName": "Segoe UI", "value": "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" },
+                            { "displayName": "Times New Roman", "value": "'Times New Roman', Times, serif" },
+                            { "displayName": "Georgia", "value": "Georgia, 'Times New Roman', serif" },
+                            { "displayName": "Courier New", "value": "'Courier New', Courier, monospace" },
+                            { "displayName": "Verdana", "value": "Verdana, Geneva, Tahoma, sans-serif" }
+                        ]
                     }
                 }
             }
@@ -56,24 +52,11 @@
         {
             "categorical": {
                 "categories": {
-                    "for": {
-                        "in": "category"
-                    },
-                    "dataReductionAlgorithm": {
-                        "top": {}
-                    }
-                },
-                "values": {
-                    "select": [
-                        {
-                            "bind": {
-                                "to": "measure"
-                            }
-                        }
-                    ]
+                    "for": { "in": "Markdown" },
+                    "dataReductionAlgorithm": { "top": {} }
                 }
             }
         }
     ],
     "privileges": []
-}
+} 
