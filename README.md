@@ -95,11 +95,19 @@ Access these settings in Power BI's formatting pane:
 - Node.js (v14+)
 - Power BI Visual Tools: `npm install -g powerbi-visuals-tools`
 
+### Dependencies
+
+- **marked** (^15.0.12) - Markdown parsing
+- **github-markdown-css** (^5.8.1) - GitHub-style formatting
+- **dompurify** (^3.2.6) - XSS protection
+- **powerbi-visuals-api** (~5.3.0) - Power BI integration
+
 ### Setup
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/MDeanLindsay/PBI-README.git
+
 cd PBI-README/README
 
 # Install dependencies
@@ -129,15 +137,6 @@ README/
 ├── pbiviz.json           # Visual metadata
 └── package.json          # Dependencies
 ```
-
-## Technical Details
-
-### Dependencies
-
-- **marked** (^15.0.12) - Markdown parsing
-- **github-markdown-css** (^5.8.1) - GitHub-style formatting
-- **dompurify** (^3.2.6) - XSS protection
-- **powerbi-visuals-api** (~5.3.0) - Power BI integration
 
 ## Contributing
 
