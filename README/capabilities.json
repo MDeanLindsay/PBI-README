@@ -34,15 +34,20 @@
                     "displayName": "Font family",
                     "type": {
                         "enumeration": [
-                            { "displayName": "System Default", "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" },
+                            { "displayName": "Segoe UI", "value": "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" },
                             { "displayName": "Arial", "value": "Arial, sans-serif" },
                             { "displayName": "Helvetica", "value": "Helvetica, Arial, sans-serif" },
-                            { "displayName": "Segoe UI", "value": "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" },
                             { "displayName": "Times New Roman", "value": "'Times New Roman', Times, serif" },
                             { "displayName": "Georgia", "value": "Georgia, 'Times New Roman', serif" },
                             { "displayName": "Courier New", "value": "'Courier New', Courier, monospace" },
                             { "displayName": "Verdana", "value": "Verdana, Geneva, Tahoma, sans-serif" }
                         ]
+                    }
+                },
+                "enableTextSelection": {
+                    "displayName": "Enable text selection",
+                    "type": {
+                        "bool": true
                     }
                 }
             }

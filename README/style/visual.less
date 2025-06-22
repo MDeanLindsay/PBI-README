@@ -16,22 +16,74 @@
     box-sizing: border-box;
     padding: 8px;
     background: transparent;
+    color: var(--pbi-color-foreground, inherit);
+    
+    // Override GitHub markdown CSS font family with user selection
+    font-family: var(--custom-font-family, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif) !important;
     
     // Enable smooth scrolling for the container
     scroll-behavior: smooth;
     
     // Scale everything proportionally based on base font size
     font-size: var(--base-font-size, 16px);
+
+    // Focus styles for the container itself
+    &:focus {
+        outline: 2px solid var(--pbi-color-foreground, #0366d6);
+        outline-offset: -2px;
+    }
+
+    // High contrast support for code elements
+    code, pre {
+        background-color: var(--pbi-color-background-lighter, #f6f8fa);
+        color: var(--pbi-color-foreground, inherit);
+        border: 1px solid var(--pbi-color-foreground-neutral-tertiary, #d0d7de);
+        
+        &:focus {
+            outline: 2px solid var(--pbi-color-foreground, #0366d6);
+            outline-offset: 2px;
+        }
+    }
+
+    // Ensure sufficient contrast for table borders
+    table, th, td {
+        border-color: var(--pbi-color-foreground-neutral-tertiary, #d0d7de);
+    }
+
+    // High contrast support for blockquotes
+    blockquote {
+        border-left-color: var(--pbi-color-foreground-neutral-secondary, #57606a);
+        color: var(--pbi-color-foreground-neutral-secondary, #57606a);
+    }
     
-    h1 { font-size: calc(var(--base-font-size, 16px) * 2) !important; }
-    h2 { font-size: calc(var(--base-font-size, 16px) * 1.5) !important; }
-    h3 { font-size: calc(var(--base-font-size, 16px) * 1.25) !important; }
-    h4 { font-size: calc(var(--base-font-size, 16px) * 1) !important; }
-    h5 { font-size: calc(var(--base-font-size, 16px) * 0.875) !important; }
-    h6 { font-size: calc(var(--base-font-size, 16px) * 0.85) !important; }
+    h1 { 
+        font-size: calc(var(--base-font-size, 16px) * 2) !important; 
+        font-family: inherit !important;
+    }
+    h2 { 
+        font-size: calc(var(--base-font-size, 16px) * 1.5) !important; 
+        font-family: inherit !important;
+    }
+    h3 { 
+        font-size: calc(var(--base-font-size, 16px) * 1.25) !important; 
+        font-family: inherit !important;
+    }
+    h4 { 
+        font-size: calc(var(--base-font-size, 16px) * 1) !important; 
+        font-family: inherit !important;
+    }
+    h5 { 
+        font-size: calc(var(--base-font-size, 16px) * 0.875) !important; 
+        font-family: inherit !important;
+    }
+    h6 { 
+        font-size: calc(var(--base-font-size, 16px) * 0.85) !important; 
+        font-family: inherit !important;
+    }
     
-    p, li, td, th, span, div, blockquote, code {
+    p, li, td, th, span, div, blockquote, code, pre {
         font-size: var(--base-font-size, 16px) !important;
+        font-family: inherit !important;
     }
     
     // Mixin for consistent list styling
@@ -62,27 +114,47 @@
     ul ul ul li { list-style-type: square !important; }
     ol ol li { list-style-type: lower-alpha !important; }
     
-    // Enhance internal links styling
+    // Enhance internal links styling with high-contrast support
     a[href^="#"] {
-        color: #0366d6;
+        color: var(--pbi-color-foreground, #0366d6);
         text-decoration: none;
         cursor: pointer;
-        border-bottom: 1px dotted #0366d6;
+        border-bottom: 1px dotted var(--pbi-color-foreground, #0366d6);
+        font-family: inherit !important;
         
         &:hover {
             text-decoration: underline;
-            border-bottom: 1px solid #0366d6;
+            border-bottom: 1px solid var(--pbi-color-foreground, #0366d6);
+            background-color: var(--pbi-color-background-hover, transparent);
         }
         
         &:visited {
-            color: #6f42c1;
+            color: var(--pbi-color-foreground-neutral-secondary, #6f42c1);
         }
+
+        &:focus {
+            outline: 2px solid var(--pbi-color-foreground, #0366d6);
+            outline-offset: 2px;
+        }
+    }
+
+    // Ensure all links inherit the font family
+    a {
+        font-family: inherit !important;
     }
     
     // Add padding to headers to provide better scroll target positioning
     h1, h2, h3, h4, h5, h6 {
         scroll-margin-top: 20px;
         position: relative;
+        color: var(--pbi-color-foreground, inherit);
+        
+        // Focus styles for keyboard navigation
+        &:focus {
+            outline: 2px solid var(--pbi-color-foreground, #0366d6);
+            outline-offset: 2px;
+            background-color: var(--pbi-color-background-hover, rgba(0, 0, 0, 0.1));
+        }
         
         // Add a subtle anchor point indicator on hover
         &:hover::before {
@@ -99,14 +171,16 @@
             border-radius: 4px;
             margin: 8px 0;
             animation: highlight-fade 3s ease-out;
+            background-color: var(--pbi-color-background-selected, #fff3cd);
+            border-left: 4px solid var(--pbi-color-foreground, #ffc107);
         }
     }
     
     // Animation for the target highlight
     @keyframes highlight-fade {
         0% {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
+            background-color: var(--pbi-color-background-selected, #fff3cd);
+            border-left: 4px solid var(--pbi-color-foreground, #ffc107);
         }
         100% {
             background-color: transparent;
@@ -117,5 +191,31 @@
     // Ensure smooth scrolling behavior
     html {
         scroll-behavior: smooth;
+    }
+
+    // Selection state styling
+    &.selected {
+        border-left: 4px solid var(--pbi-color-foreground, #0078d4);
+        background-color: var(--pbi-color-background-selected, rgba(0, 120, 212, 0.1));
+        transition: all 0.2s ease-in-out;
+    }
+
+    // Hover effect for selection (only when not in text selection mode)
+    &:not(.text-selection-mode):hover {
+        cursor: pointer;
+        background-color: var(--pbi-color-background-hover, rgba(0, 0, 0, 0.05));
+    }
+
+    // Text selection mode styling
+    &.text-selection-mode {
+        cursor: text;
+        user-select: text;
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        
+        // Remove hover effects when in text selection mode
+        &:hover {
+            background-color: transparent;
+        }
     }
 } 

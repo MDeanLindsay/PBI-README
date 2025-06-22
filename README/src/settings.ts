@@ -97,21 +97,26 @@ class ViewerCardSettings extends FormattingSettingsCard {
         name: "fontFamily",
         displayName: "Font family",
         items: [
-            { displayName: "System Default", value: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" },
+            { displayName: "Segoe UI", value: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" },
             { displayName: "Arial", value: "Arial, sans-serif" },
             { displayName: "Helvetica", value: "Helvetica, Arial, sans-serif" },
-            { displayName: "Segoe UI", value: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" },
             { displayName: "Times New Roman", value: "'Times New Roman', Times, serif" },
             { displayName: "Georgia", value: "Georgia, 'Times New Roman', serif" },
             { displayName: "Courier New", value: "'Courier New', Courier, monospace" },
             { displayName: "Verdana", value: "Verdana, Geneva, Tahoma, sans-serif" }
         ],
-        value: { displayName: "System Default", value: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" }
+        value: { displayName: "Segoe UI", value: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }
+    });
+
+    enableTextSelection = new formattingSettings.ToggleSwitch({
+        name: "enableTextSelection",
+        displayName: "Enable text selection",
+        value: true
     });
 
     name: string = "viewer";
     displayName: string = "Viewer";
-    slices: Array<FormattingSettingsSlice> = [this.fontSize, this.padding, this.backgroundColor, this.fontFamily];
+    slices: Array<FormattingSettingsSlice> = [this.fontSize, this.padding, this.backgroundColor, this.fontFamily, this.enableTextSelection];
 }
 
 /**
