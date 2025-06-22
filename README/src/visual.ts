@@ -87,8 +87,19 @@ export class Visual implements IVisual {
             ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id']
         });
         
-        // 4️⃣ Inject into the visual's container
-        this.target.innerHTML = safeHtml;
+        // 4️⃣ Inject into the visual's container  
+        //    ESLint rule "powerbi-visuals/no-inner-outer-html" forbids assigning to
+        //    innerHTML/outerHTML.  Instead, parse the sanitised HTML into a
+        //    DocumentFragment and append it, clearing any previous children first.
+
+        // Remove any existing child nodes
+        while (this.target.firstChild) {
+            this.target.removeChild(this.target.firstChild);
+        }
+
+        // Convert the safe HTML string into DOM nodes and append
+        const fragment = document.createRange().createContextualFragment(safeHtml);
+        this.target.appendChild(fragment);
 
         // 5️⃣ Set up internal link navigation
         this.setupInternalLinks();
