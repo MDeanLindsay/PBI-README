@@ -7,6 +7,9 @@
     "url": "default_template_value"
   },
   "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "pbiviz": "pbiviz",
     "start": "pbiviz start",
