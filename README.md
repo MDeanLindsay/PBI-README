@@ -1,11 +1,8 @@
 # ReadMe - A Power BI Markdown Visual
 
-A custom Power BI visual for displaying familiar, GitHub-styled markdown content with full navigation support.
+A custom Power BI visual for displaying familiar, GitHub-styled markdown content with full navigation support. Perfect for creating documentation dashboards, formatted release notes, and searchable data dictionaries in your Power BI reports.
 
-Perfect for rendering:
-- **Documentation dashboards** - Display project docs, API references, user guides
-- **Release notes** - Formatted changelog displays
-- **Data dictionaries** - Searchable, navigable field definitions
+Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanLindsay/PBI-README/tree/main/README/dist).
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
