@@ -1,4 +1,4 @@
-# Power BI Markdown Visual
+# ReadMe - A Power BI Markdown Visual
 
 A custom Power BI visual for displaying familiar, GitHub-styled markdown content with full navigation support.
 
