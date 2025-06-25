@@ -87,20 +87,25 @@ cd PBI-README/README
 
 # Install dependencies
 npm install
+```
 
+### Development
+
+```bash
 # Start development server
 npm run start
 # or
 pbiviz start
 ```
 
+
 ### Build for Production
 
 ```bash
 # Create .pbiviz package
-npm pbiviz package
-# or 
 npm run package
+# or 
+npm pbiviz package
 ```
 
 ### Project Structure
