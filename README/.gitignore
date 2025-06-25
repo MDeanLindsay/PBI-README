@@ -1,8 +1,8 @@
 # Power BI Visual specific files
-dist/
+
 .tmp/
 node_modules/
-*.pbiviz
+
 
 # TypeScript compilation
 *.js.map
