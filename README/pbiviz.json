@@ -15,7 +15,7 @@
         "email": "me@MDLindsay.com"
     },
     "assets": {
-        "icon": "assets/icon.png"
+        "icon": "assets/icon_30px.png"
     },
     "externalJS": null,
     "style": "style/visual.less",
