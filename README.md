@@ -7,6 +7,29 @@ Perfect for rendering:
 - **Release notes** - Formatted changelog displays
 - **Data dictionaries** - Searchable, navigable field definitions
 
+## Table of Contents
+- [ReadMe - A Power BI Markdown Visual](#readme---a-power-bi-markdown-visual)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Using the Visual](#using-the-visual)
+    - [Data Requirements](#data-requirements)
+  - [Formatting Options](#formatting-options)
+  - [Development](#development)
+    - [Prerequisites](#prerequisites)
+    - [Dependencies](#dependencies)
+    - [Setup](#setup)
+    - [Development](#development-1)
+    - [Build for Production](#build-for-production)
+    - [Project Structure](#project-structure)
+  - [Contributing](#contributing)
+  - [Changelog](#changelog)
+    - [v1.0.0.0](#v1000)
+  - [Known Issues](#known-issues)
+  - [Support](#support)
+  - [License](#license)
+    - [Third-Party Licenses](#third-party-licenses)
+
 ## Features
 
 - **GitHub-Style Formatting**: Uses authentic GitHub markdown CSS
@@ -48,7 +71,7 @@ This report shows...
 Based on our analysis...
 ```
 
-## ⚙️ Formatting Options
+## Formatting Options
 
 Access these settings in Power BI's formatting pane:
 
@@ -132,7 +155,7 @@ README/
 4. Push to branch: `git push origin feature/new-feature`
 5. Open a pull request
 
-## 📋 Changelog
+## Changelog
 
 ### v1.0.0.0
 - Initial release
