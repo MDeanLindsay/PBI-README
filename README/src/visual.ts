@@ -87,12 +87,12 @@ export class Visual implements IVisual {
         // Create selection ID for the data point (single markdown content)
         this.createDataSelectionId(options);
 
-        // 1️⃣ Extract Markdown text from the single row we mapped in capabilities.json
+        // Extract Markdown text from the single row we mapped in capabilities.json
         const markdown = options?.dataViews?.[0]
             ?.categorical?.categories?.[0]
             ?.values?.[0] as string || "";
 
-        // 2️⃣ Convert Markdown → raw HTML with header IDs enabled
+        // Convert Markdown to raw HTML with GitHub-flavored markdown enabled
         marked.use({
             gfm: true,
             breaks: true,
@@ -101,7 +101,7 @@ export class Visual implements IVisual {
         
         const html = marked.parse(markdown) as string;
 
-        // 3️⃣ Sanitize to avoid XSS
+        // Sanitize HTML to prevent XSS attacks
         const safeHtml = DOMPurify.sanitize(html, {
             ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
                           'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'a', 'img', 'table', 
@@ -109,10 +109,10 @@ export class Visual implements IVisual {
             ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id']
         });
         
-        // 4️⃣ Inject into the visual's container  
-        //    ESLint rule "powerbi-visuals/no-inner-outer-html" forbids assigning to
-        //    innerHTML/outerHTML.  Instead, parse the sanitised HTML into a
-        //    DocumentFragment and append it, clearing any previous children first.
+        // Inject sanitized HTML into the visual's container
+        // ESLint rule "powerbi-visuals/no-inner-outer-html" forbids assigning to
+        // innerHTML/outerHTML. Instead, parse the sanitised HTML into a
+        // DocumentFragment and append it, clearing any previous children first.
 
         // Remove any existing child nodes
         while (this.target.firstChild) {
@@ -123,10 +123,10 @@ export class Visual implements IVisual {
         const fragment = document.createRange().createContextualFragment(safeHtml);
         this.target.appendChild(fragment);
 
-        // 5️⃣ Set up internal link navigation
+        // Set up internal link navigation
         this.setupInternalLinks();
 
-        // 6️⃣ Apply formatting pane settings if available
+        // Apply formatting pane settings if available
         if (this.formattingSettings?.viewerCard) {
             const viewer = this.formattingSettings.viewerCard;
             
@@ -146,18 +146,16 @@ export class Visual implements IVisual {
             }
         }
 
-        // 7️⃣ Set up accessibility features
+        // Set up accessibility features
         this.setupKeyboardNavigation();
         this.setupTooltips();
         this.setupContextMenu();
         
-        // 8️⃣ Set up selection interaction (conditional based on settings)
+        // Set up selection interaction (conditional based on settings)
         this.setupSelection();
     }
 
-    /**
-     * Set up click handlers for internal markdown links
-     */
+     // Set up click handlers for internal markdown links
     private setupInternalLinks(): void {
         // Find all anchor tags with href starting with #
         const internalLinks = this.target.querySelectorAll('a[href^="#"]');
@@ -178,9 +176,7 @@ export class Visual implements IVisual {
         });
     }
 
-    /**
-     * Ensure target elements have proper IDs for navigation
-     */
+     // Ensure target elements have proper IDs for navigation
     private ensureTargetExists(targetId: string): void {
         let targetElement = this.target.querySelector(`#${targetId}`);
         
@@ -199,17 +195,13 @@ export class Visual implements IVisual {
         }
     }
 
-    /**
-     * Returns properties pane formatting model content hierarchies, properties and latest formatting values, Then populate properties pane.
-     * This method is called once every time we open properties pane or when the user edit any format property. 
-     */
+    // Returns properties pane formatting model content hierarchies, properties and latest formatting values, Then populate properties pane.
+    // This method is called once every time we open properties pane or when the user edit any format property. 
     public getFormattingModel(): powerbi.visuals.FormattingModel {
         return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
     }
 
-    /**
-     * Set up basic accessibility attributes for the root element
-     */
+    // Set up basic accessibility attributes for the root element
     private setupAccessibility(): void {
         // Add keyboard focus capability
         this.target.setAttribute('tabindex', '0');
@@ -222,9 +214,7 @@ export class Visual implements IVisual {
         this.target.setAttribute('title', 'Markdown content viewer - Use arrow keys to navigate');
     }
 
-    /**
-     * Set up keyboard navigation for focusable elements
-     */
+    // Set up keyboard navigation for focusable elements
     private setupKeyboardNavigation(): void {
         // Handle keyboard events on the container
         this.target.addEventListener('keydown', (event: KeyboardEvent) => {
@@ -244,9 +234,7 @@ export class Visual implements IVisual {
         });
     }
 
-    /**
-     * Handle keyboard navigation events
-     */
+    //Handle keyboard navigation events
     private handleKeyboardNavigation(event: KeyboardEvent): void {
         const focusableElements = Array.from(this.target.querySelectorAll('a, h1, h2, h3, h4, h5, h6')) as HTMLElement[];
         const currentFocusIndex = focusableElements.indexOf(document.activeElement as HTMLElement);
@@ -286,9 +274,7 @@ export class Visual implements IVisual {
         }
     }
 
-    /**
-     * Set up tooltips for accessibility
-     */
+    // Set up tooltips for accessibility
     private setupTooltips(): void {
         // Add simple title attributes for tooltips instead of complex tooltip service
         // This provides keyboard accessibility without complex d3 selection requirements
@@ -317,9 +303,7 @@ export class Visual implements IVisual {
         });
     }
 
-    /**
-     * Set up context menu accessibility
-     */
+    // Set up context menu accessibility
     private setupContextMenu(): void {
         // Add context menu support
         this.target.addEventListener('contextmenu', (event: MouseEvent) => {
@@ -335,9 +319,7 @@ export class Visual implements IVisual {
         });
     }
 
-    /**
-     * Show context menu at position or current focused element
-     */
+    // Show context menu at position or current focused element
     private showContextMenu(event?: MouseEvent): void {
         const position = event ? { x: event.clientX, y: event.clientY } : undefined;
         
@@ -347,9 +329,7 @@ export class Visual implements IVisual {
         this.selectionManager.showContextMenu(selectionId, position);
     }
 
-    /**
-     * Create selection ID for the markdown data point
-     */
+    // Create selection ID for the markdown data point
     private createDataSelectionId(options: VisualUpdateOptions): void {
         if (options.dataViews && options.dataViews[0] && options.dataViews[0].categorical) {
             const categorical = options.dataViews[0].categorical;
@@ -405,9 +385,7 @@ export class Visual implements IVisual {
         }
     }
 
-    /**
-     * Handle selection of the markdown data point
-     */
+    // Handle selection of the markdown data point
     private handleSelection(event?: MouseEvent): void {
         if (this.dataSelectionId) {
             // Toggle selection on click
@@ -421,9 +399,7 @@ export class Visual implements IVisual {
         }
     }
 
-    /**
-     * Handle selection changes (including clear from other visuals)
-     */
+    // Handle selection changes (including clear from other visuals)
     private onSelectionChanged(): void {
         const selection = this.selectionManager.getSelectionIds();
         
@@ -434,9 +410,7 @@ export class Visual implements IVisual {
         this.updateSelectionState(isSelected);
     }
 
-    /**
-     * Update visual appearance based on selection state
-     */
+    // Update visual appearance based on selection state
     private updateSelectionState(isSelected: boolean): void {
         const enableTextSelection = this.formattingSettings?.viewerCard?.enableTextSelection?.value ?? true;
         
