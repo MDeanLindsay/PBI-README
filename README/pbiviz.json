@@ -1,7 +1,7 @@
 {
     "visual": {
-        "name": "readme",
-        "displayName": "README",
+        "name": "ReadMe",
+        "displayName": "ReadMe",
         "guid": "readmeC5D23D99479C4478885DD956BB5985F1",
         "visualClassName": "Visual",
         "version": "1.0.0.0",
