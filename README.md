@@ -118,7 +118,7 @@ pbiviz start
 # Create .pbiviz package
 npm run package
 # or 
-npm pbiviz package
+pbiviz package
 ```
 
 ### Project Structure
