@@ -70,6 +70,86 @@ This report shows...
 Based on our analysis...
 ```
 
+---
+
+## Connecting to GitHub Repositories
+
+> 💡 **Quick Start Alternative:** Plan on just dumping markdown into a table that you'll update sparingly? Skip to [Formatting Options](#formatting-options).
+
+While there are many ways to import your markdown, the section below outlines how to import your markdown documentation directly from your GitHub repository for dynamic updates.
+
+<details>
+<summary><strong>📖 Complete Guide: Connect Power BI to Private GitHub README</strong></summary>
+
+### How to Connect a Private GitHub README to Power BI
+
+This guide outlines the steps to securely connect Power BI to a `README.md` file hosted in a private GitHub repository.
+
+#### Step 1: Create a New Query in Power BI
+
+1.  In Power BI Desktop, navigate to **Get Data** > **Blank Query**. This will open the Power Query Editor.
+2.  With the new query selected, click on **Advanced Editor** from the ribbon.
+
+#### Step 2: Add the Power Query (M) Code
+
+Copy and paste the following M code into the Advanced Editor window.
+
+```m
+let
+    Source = Web.Contents(
+        "https://api.github.com/repos/USER/REPO/contents/PATH-TO/README.md",
+        [
+            Headers=[Accept="application/vnd.github.v3.raw"]
+        ]
+    ),
+    Content = Text.FromBinary(Source),
+    Table = #table({"Content"}, {{Content}})
+in
+    Table
+```
+
+> **Note:** Remember to replace `USER`, `REPO`, and `PATH/TO/README.md` with your specific GitHub username, repository name, and the full path to your README file.
+
+#### Step 3: Configure Credentials
+
+After you save the code, Power BI will prompt you to enter credentials.
+
+1.  Click the **Edit Credentials** button.
+2.  In the dialog box, select the **Basic** authentication type.
+3.  **User name:** Enter your GitHub username.
+4.  **Password:** Paste your GitHub Personal Access Token (PAT).
+5.  **Select which level to apply these settings to:** Ensure this is set to the base URL, `https://api.github.com/`.
+6.  Click **Connect**.
+
+---
+
+### How to Generate a GitHub Fine-Grained PAT
+
+If you need a new Personal Access Token (PAT), it's best to create a fine-grained one with limited scope.
+
+1.  Navigate to your GitHub **Settings** > **Developer settings**.
+2.  Go to **Personal access tokens** > **Fine-grained tokens**.
+3.  Click **Generate new token**.
+4.  **Repository access:** Select **Only select repositories** and choose the repository you need to access.
+5.  **Permissions:** Click on **Repository permissions** and find the **Contents** permission. Set it to **Read-only**. This is the only permission needed.
+6.  Click **Generate token**, and copy the token immediately.
+
+---
+
+### Troubleshooting
+
+**Error:** *"A web API key can only be specified when a web API key name is provided."* or other credential issues.
+
+This usually means Power BI has cached old or incorrect credentials.
+
+1. In Power BI, go to **File** > **Options and settings** > **Data source settings**.
+2. Find any entries for `https://api.github.com` in the list.
+3. Select the entry and click **Clear Permissions** / **Delete**.
+4. Go back to the Power Query Editor and **Refresh Preview**. You will be prompted to enter the credentials again from a clean slate.
+
+</details>
+
+
 ## Formatting Options
 
 Access these settings in Power BI's formatting pane:
