@@ -33,47 +33,17 @@ Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanL
 
 ## Getting Started
 
-### Using the Visual
+### Intended Use Case
 
-1. **Import the Visual**: Install the `.pbiviz` file in your Power BI report
-2. **Add Data**: Connect your markdown text data source
-3. **Map Fields**: Drag your markdown text field to the "Markdown Text" data role
-4. **Customize**: Use the formatting pane to adjust appearance
+With the introduction of .pbip files, Power BI now offers source control capabilities for your reports. Why not extend that same source control approach to your documentation in a format developers are familiar with? Store your markdown in a repository, setup a connection with your report, and ReadMe will render your new data source without any additional tinkering needed. Your documentation evolves with your codebase, teams can update documentation without even opening the report, and everything stays in sync.
 
-### Data Requirements
+If you're planning to write and edit markdown within PowerBI, this is probably not the best visual for you.
 
-The visual expects a single text field containing valid markdown. (No, you can't use measures. Put it in a table.)
-
-```markdown
-# My Report
-
-## Table of Contents
-* [Overview](#overview)
-* [Key Metrics](#key-metrics)
-* [Conclusions](#conclusions)
-
-## Overview
-This report shows...
-
-## Key Metrics
-- Metric 1: 95%
-- Metric 2: $1.2M
-- Metric 3: 15% increase
-
-## Conclusions
-Based on our analysis...
-```
-
----
-
-## Connecting to GitHub Repositories
-
-> 💡 **Quick Start Alternative:** Plan on just dumping markdown into a table that you'll update sparingly? Skip to [Formatting Options](#formatting-options).
-
-While there are many ways to import your markdown, the section below outlines how to import your markdown documentation directly from your GitHub repository for dynamic updates.
+While there are many ways to import your markdown, the section below outlines a best practice to import your raw markdown into PowerBi from a private repository.
+If your repository is public for some reason, then you won't need any additional keys.
 
 <details>
-<summary><strong>📖 Complete Guide: Connect Power BI to Private GitHub README</strong></summary>
+<summary><strong>Complete Guide: Connect Power BI to Private GitHub README</strong></summary>
 
 ### How to Connect a Private GitHub README to Power BI
 
@@ -143,7 +113,36 @@ This usually means Power BI has cached old or incorrect credentials.
 
 </details>
 
+### Using the Visual
 
+1. **Import the Visual**: Install the `.pbiviz` file in your Power BI report
+2. **Add Data**: Connect your markdown text data source
+3. **Map Fields**: Drag your markdown text field to the "Markdown Text" data role
+4. **Customize**: Use the formatting pane to adjust appearance
+
+### Data Requirements
+
+The visual expects a single text field containing valid markdown. (No, you can't use measures. Put it in a table.)
+
+```markdown
+# My Report
+
+## Table of Contents
+* [Overview](#overview)
+* [Key Metrics](#key-metrics)
+* [Conclusions](#conclusions)
+
+## Overview
+This report shows...
+
+## Key Metrics
+- Metric 1: 95%
+- Metric 2: $1.2M
+- Metric 3: 15% increase
+
+## Conclusions
+Based on our analysis...
+```
 ## Formatting Options
 
 Access these settings in Power BI's formatting pane:
