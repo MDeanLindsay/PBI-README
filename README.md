@@ -1,25 +1,20 @@
 # ReadMe - A Power BI Markdown Visual
 
-![ReadMe Visual Example](/README/assets/readme_example.PNG)
-
 ReadMe is a custom Power BI visual for displaying familiar, GitHub-styled markdown content with full navigation support. Perfect for creating documentation dashboards, formatted release notes, and searchable data dictionaries in your Power BI reports.
 
-### Current Release
-
 Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanLindsay/PBI-README/tree/main/README/dist).
+
+![ReadMe Visual Example](/README/assets/readme_example.PNG)
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
 - [Features](#features)
-- [Intended Use Case](#intended-use-case)
 - [Getting Started](#getting-started)
   - [Using the Visual](#using-the-visual)
   - [Data Requirements](#data-requirements)
+  - [Intended Use Case](#intended-use-case)
 - [Formatting Options](#formatting-options)
 - [Development](#development)
-- [Contributing](#contributing)
-- [Changelog](#changelog)
-- [Known Issues](#known-issues)
 - [Support](#support)
 - [License](#license)
 
@@ -33,6 +28,68 @@ Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanL
 
 ## Getting Started
 
+### Using the Visual
+
+1. **Import the Visual**: Install the `.pbiviz` file in your Power BI report, or find the visual in [AppSource](https://appsource.microsoft.com/en-us/product/power-bi-visuals/michaellindsay1750536687927.readme?tab=Overview) directly in Power BI.
+2. **Add Data**: Connect your markdown text data source
+3. **Map Fields**: Drag your markdown text field to the "Markdown Text" data role
+4. **Customize**: Use the formatting pane to adjust appearance
+
+### Data Requirements
+
+The visual expects a single text field containing valid markdown. (No you can't use measures. Put it in a single cell in a table.)
+
+```markdown
+# My Report
+
+## Table of Contents
+* [Overview](#overview)
+* [Key Metrics](#key-metrics)
+* [Conclusions](#conclusions)
+
+## Overview
+This report shows...
+
+## Key Metrics
+- Metric 1: 95%
+- Metric 2: $1.2M
+- Metric 3: 15% increase
+
+## Conclusions
+Based on our analysis...
+```
+
+### Linked Indexes
+
+The visual supports GitHub-style linked indexes for easy navigation. To create clickable links that jump to specific sections:
+
+1. **Create your headers** with standard markdown syntax (`#`, `##`, `###`, etc.)
+2. **Create your links** using the format `[Link Text](#header-text)`
+3. **Convert header text to link format** by:
+   - Converting to lowercase
+   - Replacing spaces with hyphens
+   - Removing special characters
+
+**Example:**
+```markdown
+## Table of Contents
+* [Getting Started](#getting-started)
+* [Key Metrics](#key-metrics)
+* [Troubleshooting](#troubleshooting)
+
+## Getting Started
+This section explains how to begin...
+
+## Key Metrics
+Here are our important numbers...
+
+## Troubleshooting
+Common issues and solutions...
+```
+
+> **Note:** The link `#getting-started` matches the header `## Getting Started` (lowercase, spaces become hyphens).
+
+
 ### Intended Use Case
 
 With the introduction of .pbip files, Power BI now offers source control capabilities for your reports. Why not extend that same source control approach to your documentation in a format developers are familiar with? Store your markdown in a repository, setup a connection with your report, and ReadMe will render your new data source without any additional tinkering needed. Your documentation evolves with your codebase, teams can update documentation without even opening the report, and everything stays in sync.
@@ -43,7 +100,7 @@ While there are many ways to import your markdown, the section below outlines a 
 If your repository is public for some reason, then you won't need any additional keys.
 
 <details>
-<summary><strong>Complete Guide: Connect Power BI to Private GitHub README</strong></summary>
+<summary><strong>Option 1: Connect Power BI to Private GitHub README</strong></summary>
 
 ### How to Connect a Private GitHub README to Power BI
 
@@ -113,36 +170,67 @@ This usually means Power BI has cached old or incorrect credentials.
 
 </details>
 
-### Using the Visual
+<details>
+<summary><strong>Option 2: Copy/Paste Markdown Into Power BI</strong></summary>
 
-1. **Import the Visual**: Install the `.pbiviz` file in your Power BI report
-2. **Add Data**: Connect your markdown text data source
-3. **Map Fields**: Drag your markdown text field to the "Markdown Text" data role
-4. **Customize**: Use the formatting pane to adjust appearance
+### How to Copy and Paste Markdown into Power BI
 
-### Data Requirements
+Not interested in using a repository? I get it.
+This guide shows you how to create a simple data source by copying and pasting your markdown content directly into Power BI.
 
-The visual expects a single text field containing valid markdown. (No, you can't use measures. Put it in a table.)
+#### Step 1: Create a New Query in Power BI
 
-```markdown
-# My Report
+1. In Power BI Desktop, navigate to **Get Data** > **Blank Query**. This will open the Power Query Editor.
+2. With the new query selected, click on **Advanced Editor** from the ribbon.
 
-## Table of Contents
-* [Overview](#overview)
-* [Key Metrics](#key-metrics)
-* [Conclusions](#conclusions)
+#### Step 2: Add the Power Query (M) Code
 
-## Overview
-This report shows...
+Copy and paste the following M code into the Advanced Editor window.
 
-## Key Metrics
-- Metric 1: 95%
-- Metric 2: $1.2M
-- Metric 3: 15% increase
+```m
+let
+    Source = #table({"Content"}, {{"# Sales Dashboard
 
-## Conclusions
-Based on our analysis...
+## Executive Summary
+Our Q4 performance shows **strong growth** across all regions.
+
+### Key Highlights
+1. Revenue increased by 15%
+2. Customer retention at 95%
+3. New market expansion successful
+
+> **Note:** All figures are preliminary and subject to final audit.
+
+| Metric | Q3 | Q4 | Change |
+|--------|----|----|--------|
+| Revenue | $1.2M | $1.4M | +17% |
+| Customers | 1,250 | 1,380 | +10% |
+
+For more details, see our documentation."}})
+in
+    Source
 ```
+
+> **Note:** Replace the markdown content between the double quotes with your own markdown text. Make sure to escape any double quotes within your markdown by doubling them (e.g., `""quoted text""`).
+
+#### Step 3: Save and Apply
+
+1. Click **Done** to save the query.
+2. The query will create a table with a single row containing your markdown content.
+3. Close the Power Query Editor and return to your report.
+
+---
+
+### Troubleshooting
+
+**Error:** *"Expression.Error: The name 'Content' wasn't recognized."*
+
+This usually means there's a syntax error in your M code. Check that:
+1. All quotes are properly paired
+2. Double quotes within your markdown are escaped. Use `""` instead of `"`
+3. The table structure is correct: `#table({"Content"}, {{"your markdown"}})`
+</details>
+
 ## Formatting Options
 
 Access these settings in Power BI's formatting pane:
@@ -231,11 +319,6 @@ README/
 
 ### v1.0.0.0
 - Initial release
-
-## Known Issues
-
-- Internal links require exact header text matching
-- Some advanced markdown features may not render identically to GitHub
 
 ## Support
 
