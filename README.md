@@ -2,29 +2,44 @@
 
 ReadMe is a custom Power BI visual for displaying familiar, GitHub-styled markdown content with full navigation support. Perfect for creating documentation dashboards, formatted release notes, and searchable data dictionaries in your Power BI reports.
 
+### Current Release
+
 Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanLindsay/PBI-README/tree/main/README/dist).
 
-![ReadMe Visual Example](/README/assets/readme_example.PNG)
-
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Using the Visual](#using-the-visual)
-  - [Data Requirements](#data-requirements)
-  - [Intended Use Case](#intended-use-case)
-- [Formatting Options](#formatting-options)
-- [Development](#development)
-- [Support](#support)
-- [License](#license)
-
-## Features
-
-- **GitHub-Style Formatting**: Uses authentic GitHub markdown CSS
-- **Responsive Design**: Adapts to different visual sizes in Power BI reports
-- **Full Markdown Support**: 
-  - Headers, linked indexes, lists, tables, code blocks
-  - Links, images, blockquotes
+- [ReadMe - A Power BI Markdown Visual](#readme---a-power-bi-markdown-visual)
+    - [Current Release](#current-release)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [Using the Visual](#using-the-visual)
+    - [Data Requirements](#data-requirements)
+    - [Linked Indexes](#linked-indexes)
+    - [Intended Use Case](#intended-use-case)
+    - [How to Connect a Private GitHub README to Power BI](#how-to-connect-a-private-github-readme-to-power-bi)
+      - [Step 1: Create a New Query in Power BI](#step-1-create-a-new-query-in-power-bi)
+      - [Step 2: Add the Power Query (M) Code](#step-2-add-the-power-query-m-code)
+      - [Step 3: Configure Credentials](#step-3-configure-credentials)
+    - [How to Generate a GitHub Fine-Grained PAT](#how-to-generate-a-github-fine-grained-pat)
+    - [Troubleshooting](#troubleshooting)
+    - [How to Copy and Paste Markdown into Power BI](#how-to-copy-and-paste-markdown-into-power-bi)
+      - [Step 1: Create a New Query in Power BI](#step-1-create-a-new-query-in-power-bi-1)
+      - [Step 2: Add the Power Query (M) Code](#step-2-add-the-power-query-m-code-1)
+      - [Step 3: Save and Apply](#step-3-save-and-apply)
+    - [Troubleshooting](#troubleshooting-1)
+  - [Formatting Options](#formatting-options)
+  - [Development](#development)
+    - [Prerequisites](#prerequisites)
+    - [Dependencies](#dependencies)
+    - [Setup](#setup)
+    - [Development](#development-1)
+    - [Build for Production](#build-for-production)
+    - [Project Structure](#project-structure)
+  - [Contributing](#contributing)
+  - [Changelog](#changelog)
+    - [v1.0.0.0](#v1000)
+  - [Support](#support)
+  - [License](#license)
+    - [Third-Party Licenses](#third-party-licenses)
 
 ## Getting Started
 
@@ -34,6 +49,8 @@ Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanL
 2. **Add Data**: Connect your markdown text data source
 3. **Map Fields**: Drag your markdown text field to the "Markdown Text" data role
 4. **Customize**: Use the formatting pane to adjust appearance
+
+![ReadMe Visual Example](/README/assets/readme_example.PNG)
 
 ### Data Requirements
 
