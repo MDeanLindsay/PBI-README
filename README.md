@@ -2,28 +2,29 @@
 
 ReadMe is a custom Power BI visual for displaying familiar, GitHub-styled markdown content with full navigation support. Perfect for creating documentation dashboards, formatted release notes, and searchable data dictionaries in your Power BI reports.
 
+With the introduciton of `.pbip` files, Power BI now offers source control capabilities. Why not extend that same source control approach to your documentation in a format developers are familiar with? Store your markdown in a repository as the `README.md`, setup a connection with your report, and the visual will render your new data source without any additional tinkering needed.
+
 ### Current Release
 
 Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanLindsay/PBI-README/tree/main/README/dist).
 
 ## Table of Contents
-- [ReadMe - A Power BI Markdown Visual](#readme---a-power-bi-markdown-visual)
-    - [Current Release](#current-release)
-  - [Table of Contents](#table-of-contents)
-  - [Getting Started](#getting-started)
-    - [Using the Visual](#using-the-visual)
-    - [Data Requirements](#data-requirements)
-    - [Linked Indexes](#linked-indexes)
-    - [Intended Use Case](#intended-use-case)
-    - [How to Connect a Private GitHub README to Power BI](#how-to-connect-a-private-github-readme-to-power-bi)
-    - [How to Copy and Paste Markdown into Power BI](#how-to-copy-and-paste-markdown-into-power-bi)
-  - [Formatting Options](#formatting-options)
-  - [Development](#development)
-  - [Contributing](#contributing)
-  - [Changelog](#changelog)
-    - [v1.0.0.0](#v1000)
-  - [Support](#support)
-  - [License](#license)
+- [Current Release](#current-release)
+- [Table of Contents](#table-of-contents)
+- [Getting Started](#getting-started)
+  - [Using the Visual](#using-the-visual)
+  - [Data Requirements](#data-requirements)
+  - [Linked Indexes](#linked-indexes)
+  - [Intended Use Case](#intended-use-case)
+  - [How to Connect a Private GitHub README to Power BI](#how-to-connect-a-private-github-readme-to-power-bi)
+  - [How to Copy and Paste Markdown into Power BI](#how-to-copy-and-paste-markdown-into-power-bi)
+- [Formatting Options](#formatting-options)
+- [Development](#development)
+- [Contributing](#contributing)
+- [Changelog](#changelog)
+  - [v1.0.0.0](#v1000)
+- [Support](#support)
+- [License](#license)
 
 ## Getting Started
 
@@ -91,14 +92,9 @@ Common issues and solutions...
 > **Note:** The link `#getting-started` matches the header `## Getting Started` (lowercase, spaces become hyphens).
 
 
-### Intended Use Case
+### Importing Markdown
 
-With the introduction of .pbip files, Power BI now offers source control capabilities for your reports. Why not extend that same source control approach to your documentation in a format developers are familiar with? Store your markdown in a repository, setup a connection with your report, and ReadMe will render your new data source without any additional tinkering needed. Your documentation evolves with your codebase, teams can update documentation without even opening the report, and everything stays in sync.
-
-If you're planning to write and edit markdown within PowerBI, this is probably not the best visual for you.
-
-While there are many ways to import your markdown, the section below outlines a best practice to import your raw markdown into PowerBi from a private repository.
-If your repository is public for some reason, then you won't need any additional keys.
+While there are many ways to import your markdown, the section below outlines best practices to import your raw markdown into PowerBi.
 
 <details>
 <summary><strong>Option 1: Connect Power BI to Private GitHub README</strong></summary>
