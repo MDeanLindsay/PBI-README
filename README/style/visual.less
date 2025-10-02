@@ -107,6 +107,18 @@
         .list-item-base();
     }
     
+    // Fix spacing for nested lists to prevent extra line breaks
+    ul ul, ol ol, ul ol, ol ul {
+        margin: 0.25em 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    
+    // Ensure nested list items don't have extra spacing
+    ul ul li, ol ol li, ul ol li, ol ul li {
+        margin: 0.125em 0 !important;
+    }
+    
     // List type specific styles
     ul li { list-style-type: disc !important; }
     ol li { list-style-type: decimal !important; }
@@ -170,9 +182,7 @@
             padding: 8px 12px;
             border-radius: 4px;
             margin: 8px 0;
-            animation: highlight-fade 3s ease-out;
-            background-color: var(--pbi-color-background-selected, #fff3cd);
-            border-left: 4px solid var(--pbi-color-foreground, #ffc107);
+            animation: highlight-fade 3s ease-out forwards;
         }
     }
     
@@ -216,6 +226,109 @@
         // Remove hover effects when in text selection mode
         &:hover {
             background-color: transparent;
+        }
+    }
+
+    // Details/Summary dropdown styling
+    details {
+        margin: 16px 0;
+        border: 1px solid var(--pbi-color-foreground-neutral-tertiary, #d0d7de);
+        border-radius: 6px;
+        background-color: var(--pbi-color-background-lighter, #f6f8fa);
+        font-family: inherit !important;
+        
+        summary {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--pbi-color-foreground, inherit);
+            background-color: var(--pbi-color-background, #ffffff);
+            border-radius: 6px 6px 0 0;
+            font-family: inherit !important;
+            font-size: var(--base-font-size, 16px) !important;
+            list-style: none;
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            
+            // Custom arrow indicator
+            &::before {
+                content: "▶";
+                position: absolute;
+                right: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                transition: transform 0.2s ease;
+                font-size: 0.8em;
+                color: var(--pbi-color-foreground-neutral-secondary, #57606a);
+            }
+            
+            // Remove default marker
+            &::-webkit-details-marker {
+                display: none;
+            }
+            
+            &::-moz-list-bullet {
+                list-style-type: none;
+            }
+            
+            &:hover {
+                background-color: var(--pbi-color-background-hover, rgba(0, 0, 0, 0.05));
+            }
+            
+            &:focus {
+                outline: 2px solid var(--pbi-color-foreground, #0366d6);
+                outline-offset: -2px;
+            }
+        }
+        
+        // When details is open, rotate the arrow
+        &[open] summary::before {
+            transform: translateY(-50%) rotate(90deg);
+        }
+        
+        // Content wrapper inside details - single fluid container
+        .details-content {
+            padding: 16px;
+            margin: 0;
+            border-top: 1px solid var(--pbi-color-foreground-neutral-tertiary, #d0d7de);
+            background-color: var(--pbi-color-background, #ffffff);
+            border-radius: 0 0 6px 6px;
+            
+            // Nested content styling
+            p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, code, pre, table {
+                margin: 0 0 16px 0;
+                font-family: inherit !important;
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        
+        // Fallback for details with single content element (no wrapper)
+        > *:not(summary):not(.details-content) {
+            padding: 16px;
+            margin: 0;
+            border-top: 1px solid var(--pbi-color-foreground-neutral-tertiary, #d0d7de);
+            background-color: var(--pbi-color-background, #ffffff);
+            border-radius: 0 0 6px 6px;
+            
+            p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, code, pre, table {
+                margin: 0 0 16px 0;
+                font-family: inherit !important;
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        
+        // Focus styles for keyboard navigation
+        &:focus-within {
+            outline: 2px solid var(--pbi-color-foreground, #0366d6);
+            outline-offset: 2px;
         }
     }
 } 

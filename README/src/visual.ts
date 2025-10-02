@@ -87,7 +87,7 @@ export class Visual implements IVisual {
         // Create selection ID for the data point (single markdown content)
         this.createDataSelectionId(options);
 
-        // Extract Markdown text from the single row we mapped in capabilities.json
+        // Extract Markdown text from the single row that is mapped in capabilities.json
         const markdown = options?.dataViews?.[0]
             ?.categorical?.categories?.[0]
             ?.values?.[0] as string || "";
@@ -105,14 +105,11 @@ export class Visual implements IVisual {
         const safeHtml = DOMPurify.sanitize(html, {
             ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
                           'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'a', 'img', 'table', 
-                          'thead', 'tbody', 'tr', 'th', 'td', 'hr', 'del', 'span', 'div'],
-            ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id']
+                          'thead', 'tbody', 'tr', 'th', 'td', 'hr', 'del', 'span', 'div', 'details', 'summary'],
+            ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'open']
         });
         
-        // Inject sanitized HTML into the visual's container
-        // ESLint rule "powerbi-visuals/no-inner-outer-html" forbids assigning to
-        // innerHTML/outerHTML. Instead, parse the sanitised HTML into a
-        // DocumentFragment and append it, clearing any previous children first.
+        // Parse the sanitised HTML into a DocumentFragment and append it, clearing any previous children first.
 
         // Remove any existing child nodes
         while (this.target.firstChild) {
@@ -121,6 +118,10 @@ export class Visual implements IVisual {
 
         // Convert the safe HTML string into DOM nodes and append
         const fragment = document.createRange().createContextualFragment(safeHtml);
+        
+        // Wrap details content in a single container to avoid styling issues
+        this.wrapDetailsContent(fragment);
+        
         this.target.appendChild(fragment);
 
         // Set up internal link navigation
@@ -195,6 +196,34 @@ export class Visual implements IVisual {
         }
     }
 
+    // Wrap details content in a single container to prevent styling gaps
+    private wrapDetailsContent(fragment: DocumentFragment): void {
+        const detailsElements = fragment.querySelectorAll('details');
+        
+        detailsElements.forEach((details: HTMLDetailsElement) => {
+            const summary = details.querySelector('summary');
+            const contentElements = Array.from(details.children).filter(child => child !== summary);
+            
+            if (contentElements.length > 1) {
+                // Create a wrapper div for all content
+                const wrapper = document.createElement('div');
+                wrapper.className = 'details-content';
+                
+                // Move all content elements into the wrapper
+                contentElements.forEach(element => {
+                    wrapper.appendChild(element);
+                });
+                
+                // Insert the wrapper after the summary
+                if (summary) {
+                    summary.insertAdjacentElement('afterend', wrapper);
+                } else {
+                    details.insertBefore(wrapper, details.firstChild);
+                }
+            }
+        });
+    }
+
     // Returns properties pane formatting model content hierarchies, properties and latest formatting values, Then populate properties pane.
     // This method is called once every time we open properties pane or when the user edit any format property. 
     public getFormattingModel(): powerbi.visuals.FormattingModel {
@@ -221,8 +250,8 @@ export class Visual implements IVisual {
             this.handleKeyboardNavigation(event);
         });
 
-        // Set up tab navigation for links and headers
-        const focusableElements = this.target.querySelectorAll('a, h1, h2, h3, h4, h5, h6');
+        // Set up tab navigation for links, headers, and summary elements
+        const focusableElements = this.target.querySelectorAll('a, h1, h2, h3, h4, h5, h6, summary');
         focusableElements.forEach((element, index) => {
             const htmlElement = element as HTMLElement;
             htmlElement.setAttribute('tabindex', '0');
@@ -230,13 +259,17 @@ export class Visual implements IVisual {
             // Add navigation help via aria-label
             if (element.tagName.startsWith('H')) {
                 htmlElement.setAttribute('aria-label', `Heading level ${element.tagName.slice(1)}: ${element.textContent}`);
+            } else if (element.tagName === 'SUMMARY') {
+                const details = element.closest('details');
+                const isOpen = details?.hasAttribute('open');
+                htmlElement.setAttribute('aria-label', `Collapsible section: ${element.textContent} (${isOpen ? 'expanded' : 'collapsed'})`);
             }
         });
     }
 
     //Handle keyboard navigation events
     private handleKeyboardNavigation(event: KeyboardEvent): void {
-        const focusableElements = Array.from(this.target.querySelectorAll('a, h1, h2, h3, h4, h5, h6')) as HTMLElement[];
+        const focusableElements = Array.from(this.target.querySelectorAll('a, h1, h2, h3, h4, h5, h6, summary')) as HTMLElement[];
         const currentFocusIndex = focusableElements.indexOf(document.activeElement as HTMLElement);
 
         switch (event.key) {
@@ -269,6 +302,22 @@ export class Visual implements IVisual {
                 event.preventDefault();
                 if (focusableElements[focusableElements.length - 1]) {
                     focusableElements[focusableElements.length - 1].focus();
+                }
+                break;
+            
+            case 'Enter':
+            case ' ':
+                // Handle Enter/Space on summary elements to toggle details
+                const activeElement = document.activeElement as HTMLElement;
+                if (activeElement && activeElement.tagName === 'SUMMARY') {
+                    event.preventDefault();
+                    const details = activeElement.closest('details') as HTMLDetailsElement;
+                    if (details) {
+                        details.open = !details.open;
+                        // Update aria-label to reflect new state
+                        const isOpen = details.hasAttribute('open');
+                        activeElement.setAttribute('aria-label', `Collapsible section: ${activeElement.textContent} (${isOpen ? 'expanded' : 'collapsed'})`);
+                    }
                 }
                 break;
         }
