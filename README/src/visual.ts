@@ -259,7 +259,7 @@ export class Visual implements IVisual {
 
 To use this visual, add markdown content using one of the methods below.
 
-# Quick Start
+## Quick Start
 
 ### Simple Method: Measures
 Create a measure that returns markdown text and drag it to the **Text Measure** input.

@@ -66,12 +66,11 @@
                 "categories": {
                     "for": { "in": "Markdown" },
                     "dataReductionAlgorithm": { "top": {} }
+                },
+                "values": {
+                    "for": { "in": "MarkdownMeasure" },
+                    "dataReductionAlgorithm": { "top": {} }
                 }
-            }
-        },
-        {
-            "single": {
-                "role": "MarkdownMeasure"
             }
         }
     ],
