@@ -31,7 +31,7 @@ import { createTooltipServiceWrapper, ITooltipServiceWrapper } from "powerbi-vis
 import "./../style/visual.less";
 import * as marked from "marked";
 import DOMPurify from "dompurify";
-import "github-markdown-css"; 
+import "github-markdown-css";
 
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
@@ -50,24 +50,23 @@ export class Visual implements IVisual {
     private dataSelectionId: powerbi.visuals.ISelectionId;
 
     constructor(options: VisualConstructorOptions) {
-        console.log('Visual constructor', options);
         this.formattingSettingsService = new FormattingSettingsService();
         this.host = options.host;
         this.target = options.element;
         this.target.classList.add("markdown-body");
-        
+
         // Initialize tooltip service wrapper
         this.tooltipServiceWrapper = createTooltipServiceWrapper(
             this.host.tooltipService,
             options.element
         );
-        
+
         // Initialize selection manager
         this.selectionManager = this.host.createSelectionManager();
-        
+
         // Set up accessibility attributes
         this.setupAccessibility();
-        
+
         // Ensure the container has proper dimensions and overflow for scrolling
         this.target.style.width = "100%";
         this.target.style.height = "100%";
@@ -87,10 +86,29 @@ export class Visual implements IVisual {
         // Create selection ID for the data point (single markdown content)
         this.createDataSelectionId(options);
 
-        // Extract Markdown text from the single row that is mapped in capabilities.json
-        const markdown = options?.dataViews?.[0]
-            ?.categorical?.categories?.[0]
-            ?.values?.[0] as string || "";
+        // Check if we have data views (visual has data connected)
+        if (!options.dataViews || options.dataViews.length === 0) {
+            this.showPlaceholder();
+            return;
+        }
+
+        // Extract Markdown text - check both categories and values
+        let markdown = "";
+
+        // Check categories first (original approach)
+        if (options.dataViews[0]?.categorical?.categories?.[0]?.values?.[0]) {
+            markdown = options.dataViews[0].categorical.categories[0].values[0] as string;
+        }
+        // Check values (alternative structure)
+        else if (options.dataViews[0]?.categorical?.values?.[0]?.values?.[0]) {
+            markdown = options.dataViews[0].categorical.values[0].values[0] as string;
+        }
+
+        // Check if markdown content is empty
+        if (!markdown || markdown.trim() === "") {
+            this.showPlaceholder();
+            return;
+        }
 
         // Convert Markdown to raw HTML with GitHub-flavored markdown enabled
         marked.use({
@@ -98,17 +116,17 @@ export class Visual implements IVisual {
             breaks: true,
             pedantic: false
         });
-        
+
         const html = marked.parse(markdown) as string;
 
         // Sanitize HTML to prevent XSS attacks
         const safeHtml = DOMPurify.sanitize(html, {
-            ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
-                          'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'a', 'img', 'table', 
-                          'thead', 'tbody', 'tr', 'th', 'td', 'hr', 'del', 'span', 'div', 'details', 'summary'],
+            ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+                'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'a', 'img', 'table',
+                'thead', 'tbody', 'tr', 'th', 'td', 'hr', 'del', 'span', 'div', 'details', 'summary'],
             ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'open']
         });
-        
+
         // Parse the sanitised HTML into a DocumentFragment and append it, clearing any previous children first.
 
         // Remove any existing child nodes
@@ -118,10 +136,10 @@ export class Visual implements IVisual {
 
         // Convert the safe HTML string into DOM nodes and append
         const fragment = document.createRange().createContextualFragment(safeHtml);
-        
+
         // Wrap details content in a single container to avoid styling issues
         this.wrapDetailsContent(fragment);
-        
+
         this.target.appendChild(fragment);
 
         // Set up internal link navigation
@@ -130,7 +148,7 @@ export class Visual implements IVisual {
         // Apply formatting pane settings if available
         if (this.formattingSettings?.viewerCard) {
             const viewer = this.formattingSettings.viewerCard;
-            
+
             if (viewer.fontSize?.value !== undefined) {
                 this.target.style.setProperty('--base-font-size', `${viewer.fontSize.value}px`);
                 this.target.style.fontSize = `${viewer.fontSize.value}px`;
@@ -151,24 +169,24 @@ export class Visual implements IVisual {
         this.setupKeyboardNavigation();
         this.setupTooltips();
         this.setupContextMenu();
-        
+
         // Set up selection interaction (conditional based on settings)
         this.setupSelection();
     }
 
-     // Set up click handlers for internal markdown links
+    // Set up click handlers for internal markdown links
     private setupInternalLinks(): void {
         // Find all anchor tags with href starting with #
         const internalLinks = this.target.querySelectorAll('a[href^="#"]');
-        
+
         internalLinks.forEach((link: HTMLAnchorElement) => {
             link.addEventListener('click', (event: Event) => {
                 // Don't prevent default - let browser handle the hash navigation
                 const targetId = link.getAttribute('href')!.substring(1);
-                
+
                 // Ensure target element exists, create ID if needed
                 this.ensureTargetExists(targetId);
-                
+
                 // Use native hash navigation - simplest approach
                 setTimeout(() => {
                     window.location.hash = targetId;
@@ -177,10 +195,10 @@ export class Visual implements IVisual {
         });
     }
 
-     // Ensure target elements have proper IDs for navigation
+    // Ensure target elements have proper IDs for navigation
     private ensureTargetExists(targetId: string): void {
         let targetElement = this.target.querySelector(`#${targetId}`);
-        
+
         if (!targetElement) {
             // Find heading by text content and add ID
             const headings = this.target.querySelectorAll('h1, h2, h3, h4, h5, h6');
@@ -199,21 +217,21 @@ export class Visual implements IVisual {
     // Wrap details content in a single container to prevent styling gaps
     private wrapDetailsContent(fragment: DocumentFragment): void {
         const detailsElements = fragment.querySelectorAll('details');
-        
+
         detailsElements.forEach((details: HTMLDetailsElement) => {
             const summary = details.querySelector('summary');
             const contentElements = Array.from(details.children).filter(child => child !== summary);
-            
+
             if (contentElements.length > 1) {
                 // Create a wrapper div for all content
                 const wrapper = document.createElement('div');
                 wrapper.className = 'details-content';
-                
+
                 // Move all content elements into the wrapper
                 contentElements.forEach(element => {
                     wrapper.appendChild(element);
                 });
-                
+
                 // Insert the wrapper after the summary
                 if (summary) {
                     summary.insertAdjacentElement('afterend', wrapper);
@@ -222,6 +240,240 @@ export class Visual implements IVisual {
                 }
             }
         });
+    }
+
+    // Show placeholder text when no data is available
+    private showPlaceholder(): void {
+        // Clear any existing content
+        while (this.target.firstChild) {
+            this.target.removeChild(this.target.firstChild);
+        }
+
+        // Create placeholder container
+        const placeholder = document.createElement('div');
+        placeholder.className = 'placeholder-container markdown-body';
+
+        // Create markdown content for the placeholder using the exact content from PLACEHOLDER.md
+        const markdownContent = `
+# 📝 ReadMe, A Markdown Visual
+
+To use this visual, add markdown content using one of the methods below.
+
+# Quick Start
+
+### Simple Method: Measures
+Create a measure that returns markdown text and drag it to the **Text Measure** input.
+
+**Example Measure:**
+\`\`\`m
+Markdown_Measure = "
+
+# Sales Dashboard
+
+## Executive Summary
+Our Q4 performance shows **strong growth** across all regions.
+
+### Key Highlights
+1. Revenue increased by 15%
+2. Customer retention at 95%
+3. New market expansion successful
+
+> Note: Make sure to escape any double quotes within your markdown by doubling them (e.g., ""quoted text"").
+
+"
+\`\`\`
+
+### Advanced Methods: Table Fields
+Drag a field containing markdown to the **Text Field** input.
+
+**External Data Source Example:**
+\`\`\`m
+let
+    Source = Web.Contents(
+        "https://api.github.com/repos/USER/REPO/contents/PATH-TO/README.md",
+        [
+            Headers=[Accept="application/vnd.github.v3.raw"]
+        ]
+    ),
+    Content = Text.FromBinary(Source),
+    Table = #table({"Content"}, {{Content}})
+in
+    Table
+\`\`\`
+
+**Local Advanced Editor Example:**
+\`\`\`m
+let
+    Source = #table({"Content"}, {{"
+
+# Sales Dashboard
+
+## Executive Summary
+Our Q4 performance shows **strong growth** across all regions.
+
+### Key Highlights
+1. Revenue increased by 15%
+2. Customer retention at 95%
+3. New market expansion successful
+
+> Note: Make sure to escape any double quotes within your markdown by doubling them (e.g., ""quoted text"").
+
+"}})
+in
+    Source
+\`\`\`
+
+
+---
+
+## Supported Markdown Features
+
+### Headers
+Create hierarchical document structure with headers.
+
+\`\`\`markdown
+# Main Title (H1)
+## Section Title (H2)
+### Subsection (H3)
+#### Sub-subsection (H4)
+##### Small Header (H5)
+###### Tiny Header (H6)
+\`\`\`
+
+### Text Formatting
+Emphasize text with bold, italic, and other formatting.
+
+\`\`\`markdown
+**Bold text** and *italic text*
+***Bold and italic***
+~~Strikethrough text~~
+<u>Underlined text</u>
+\`\`\`
+
+### Lists
+Create ordered and unordered lists with proper nesting.
+
+\`\`\`markdown
+- Unordered list item
+- Another item
+  - Nested item
+
+1. Ordered list item
+2. Second item
+   1. Nested numbered item
+\`\`\`
+
+### Links
+Create internal navigation links in your documentation.
+
+\`\`\`markdown
+[Internal Link](#section-title)
+\`\`\`
+
+### Images
+Embed images in your markdown content.
+
+\`\`\`markdown
+![Alt text](https://example.com/image.png)
+\`\`\`
+
+### Tables
+Create structured data tables with alignment.
+
+\`\`\`markdown
+| Header 1 | Header 2 | Header 3 |
+|----------|:--------:|---------:|
+| Left     | Center   | Right    |
+| Data     | Data     | Data     |
+| More     | Content  | Here     |
+\`\`\`
+
+### Blockquotes
+Highlight important information or quotes.
+
+\`\`\`markdown
+> This is a blockquote
+> 
+> It can span multiple lines
+> 
+> > And can be nested
+\`\`\`
+
+### Code Blocks
+Display code with syntax highlighting.
+
+\`\`\`markdown
+    \`\`\`js
+    function example() {
+        return "Hello World";
+    }
+    \`\`\`
+\`\`\`
+
+
+### Details/Summary Dropdowns
+Create collapsible content sections.
+
+\`\`\`markdown
+<details>
+<summary><strong>Click to expand</strong></summary>
+### Hidden Content
+This content is hidden by default and can be expanded by clicking the summary.
+</details>
+\`\`\`
+
+### Footnotes
+Add reference notes to your content.
+
+\`\`\`markdown
+This is a sentence with a footnote[^1].
+
+[^1]: This is the footnote content.
+\`\`\`
+
+### Task Lists
+Create interactive checkboxes.
+
+\`\`\`markdown
+- [x] Completed task
+- [ ] Incomplete task
+\`\`\`
+
+---
+
+## Tips for Best Results
+
+- **Use consistent formatting** for better readability
+- **Test your markdown** in a markdown editor before adding to Power BI
+- **Use internal links** to create navigation within your document
+- **Leverage details/summary** for collapsible sections and better organization
+`;
+
+        // Parse the markdown content using the EXACT same approach as the main visual
+        marked.use({
+            gfm: true,
+            breaks: true,
+            pedantic: false
+        });
+
+        const html = marked.parse(markdownContent) as string;
+
+        // Sanitize HTML using the EXACT same configuration as the main visual
+        const safeHtml = DOMPurify.sanitize(html, {
+            ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+                'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'a', 'img', 'table',
+                'thead', 'tbody', 'tr', 'th', 'td', 'hr', 'del', 'span', 'div', 'details', 'summary'],
+            ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'open']
+        });
+
+        // Convert the safe HTML string into DOM nodes and append (same as main visual)
+        const fragment = document.createRange().createContextualFragment(safeHtml);
+
+        // Wrap details content in a single container to avoid styling issues (same as main visual)
+        this.wrapDetailsContent(fragment);
+
+        placeholder.appendChild(fragment);
+        this.target.appendChild(placeholder);
     }
 
     // Returns properties pane formatting model content hierarchies, properties and latest formatting values, Then populate properties pane.
@@ -234,11 +486,11 @@ export class Visual implements IVisual {
     private setupAccessibility(): void {
         // Add keyboard focus capability
         this.target.setAttribute('tabindex', '0');
-        
+
         // Add ARIA label for screen readers
         this.target.setAttribute('aria-label', 'Markdown document');
         this.target.setAttribute('role', 'document');
-        
+
         // Add a title attribute for additional context
         this.target.setAttribute('title', 'Markdown content viewer - Use arrow keys to navigate');
     }
@@ -255,7 +507,7 @@ export class Visual implements IVisual {
         focusableElements.forEach((element, index) => {
             const htmlElement = element as HTMLElement;
             htmlElement.setAttribute('tabindex', '0');
-            
+
             // Add navigation help via aria-label
             if (element.tagName.startsWith('H')) {
                 htmlElement.setAttribute('aria-label', `Heading level ${element.tagName.slice(1)}: ${element.textContent}`);
@@ -281,7 +533,7 @@ export class Visual implements IVisual {
                     focusableElements[nextIndex].focus();
                 }
                 break;
-            
+
             case 'ArrowUp':
             case 'ArrowLeft':
                 event.preventDefault();
@@ -290,21 +542,21 @@ export class Visual implements IVisual {
                     focusableElements[prevIndex].focus();
                 }
                 break;
-            
+
             case 'Home':
                 event.preventDefault();
                 if (focusableElements[0]) {
                     focusableElements[0].focus();
                 }
                 break;
-            
+
             case 'End':
                 event.preventDefault();
                 if (focusableElements[focusableElements.length - 1]) {
                     focusableElements[focusableElements.length - 1].focus();
                 }
                 break;
-            
+
             case 'Enter':
             case ' ':
                 // Handle Enter/Space on summary elements to toggle details
@@ -327,15 +579,15 @@ export class Visual implements IVisual {
     private setupTooltips(): void {
         // Add simple title attributes for tooltips instead of complex tooltip service
         // This provides keyboard accessibility without complex d3 selection requirements
-        
+
         const links = this.target.querySelectorAll('a[href]');
         links.forEach((link: HTMLAnchorElement) => {
             const href = link.getAttribute('href');
             const text = link.textContent || href;
-            const tooltipText = href?.startsWith('#') 
-                ? `Internal link to: ${href.substring(1)}` 
+            const tooltipText = href?.startsWith('#')
+                ? `Internal link to: ${href.substring(1)}`
                 : `Link to: ${href}`;
-            
+
             link.setAttribute('title', tooltipText);
             link.setAttribute('aria-describedby', `tooltip-${Date.now()}-${performance.now()}`);
         });
@@ -371,7 +623,7 @@ export class Visual implements IVisual {
     // Show context menu at position or current focused element
     private showContextMenu(event?: MouseEvent): void {
         const position = event ? { x: event.clientX, y: event.clientY } : undefined;
-        
+
         // Use the data selection ID if available, otherwise create a simple one
         const selectionId = this.dataSelectionId || this.host.createSelectionIdBuilder().createSelectionId();
 
@@ -382,7 +634,7 @@ export class Visual implements IVisual {
     private createDataSelectionId(options: VisualUpdateOptions): void {
         if (options.dataViews && options.dataViews[0] && options.dataViews[0].categorical) {
             const categorical = options.dataViews[0].categorical;
-            
+
             // Create selection ID for the first (and only) data point
             if (categorical.categories && categorical.categories[0] && categorical.categories[0].values.length > 0) {
                 this.dataSelectionId = this.host.createSelectionIdBuilder()
@@ -409,7 +661,7 @@ export class Visual implements IVisual {
 
         // Only add click handler if text selection is disabled
         const enableTextSelection = this.formattingSettings?.viewerCard?.enableTextSelection?.value ?? true;
-        
+
         if (!enableTextSelection) {
             // Handle clicks on the container to select/deselect the data point
             this.target.addEventListener('click', (event: MouseEvent) => {
@@ -417,15 +669,15 @@ export class Visual implements IVisual {
                 if ((event.target as HTMLElement).tagName === 'A') {
                     return;
                 }
-                
+
                 // Don't trigger selection if user is selecting text
                 if (window.getSelection()?.toString()) {
                     return;
                 }
-                
+
                 this.handleSelection(event);
             });
-            
+
             // Remove text selection mode class and enable Power BI selection
             this.target.classList.remove('text-selection-mode');
         } else {
@@ -439,7 +691,7 @@ export class Visual implements IVisual {
         if (this.dataSelectionId) {
             // Toggle selection on click
             const isCtrlPressed = event?.ctrlKey || event?.metaKey;
-            
+
             this.selectionManager.select(this.dataSelectionId, isCtrlPressed)
                 .then((selectionIds: powerbi.visuals.ISelectionId[]) => {
                     // Selection completed - update visual state if needed
@@ -451,7 +703,7 @@ export class Visual implements IVisual {
     // Handle selection changes (including clear from other visuals)
     private onSelectionChanged(): void {
         const selection = this.selectionManager.getSelectionIds();
-        
+
         // Check if our data point is selected by comparing selection arrays
         const isSelected = selection.length > 0 && this.dataSelectionId !== null;
 
@@ -462,7 +714,7 @@ export class Visual implements IVisual {
     // Update visual appearance based on selection state
     private updateSelectionState(isSelected: boolean): void {
         const enableTextSelection = this.formattingSettings?.viewerCard?.enableTextSelection?.value ?? true;
-        
+
         // Only show selection styling if not in text selection mode
         if (!enableTextSelection) {
             if (isSelected) {

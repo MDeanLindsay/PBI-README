@@ -1,9 +1,16 @@
 {
+    "supportsLandingPage": true,
+    "supportsEmptyDataView": true,
     "dataRoles": [
         {
             "name": "Markdown",
             "kind": "Grouping",
-            "displayName": "Markdown Text"
+            "displayName": "Text Field"
+        },
+        {
+            "name": "MarkdownMeasure",
+            "kind": "Measure",
+            "displayName": "Text Measure"
         }
     ],
     "objects": {
@@ -60,6 +67,11 @@
                     "for": { "in": "Markdown" },
                     "dataReductionAlgorithm": { "top": {} }
                 }
+            }
+        },
+        {
+            "single": {
+                "role": "MarkdownMeasure"
             }
         }
     ],

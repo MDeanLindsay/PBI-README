@@ -229,6 +229,41 @@
         }
     }
 
+    // Placeholder styling when no data is available
+    .placeholder-container {
+        padding: 20px;
+        min-height: 100%;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px dashed var(--pbi-color-foreground-neutral-tertiary, #d0d7de);
+        border-radius: 8px;
+        color: var(--pbi-color-foreground-neutral-secondary, #57606a);
+        box-sizing: border-box;
+        
+        // Scale down all text in the placeholder - force it with !important
+        &.markdown-body {
+            font-size: 0.7em !important;
+            
+            // Override specific font-size rules from GitHub Markdown CSS, but preserve heading hierarchy
+            p, li, td, th, span, div, blockquote, code, pre {
+                font-size: inherit !important;
+            }
+            
+            // Let headings maintain their relative sizing but scale them down proportionally
+            h1 { font-size: 1.8em !important; }
+            h2 { font-size: 1.5em !important; }
+            h3 { font-size: 1.25em !important; }
+            h4 { font-size: 1.1em !important; }
+            h5 { font-size: 1em !important; }
+            h6 { font-size: 0.9em !important; }
+        }
+        
+        // GitHub Markdown CSS will handle all content styling
+        // Just ensure the container has proper spacing
+        h1:first-child {
+            margin-top: 0;
+        }
+    }
+
     // Details/Summary dropdown styling
     details {
         margin: 16px 0;
@@ -252,16 +287,24 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             
-            // Custom arrow indicator
+            // Custom plus/minus indicator
             &::before {
-                content: "▶";
+                content: "+";
                 position: absolute;
                 right: 16px;
                 top: 50%;
                 transform: translateY(-50%);
-                transition: transform 0.2s ease;
-                font-size: 0.8em;
+                transition: all 0.2s ease;
+                font-size: 18px;
+                font-weight: bold;
                 color: var(--pbi-color-foreground-neutral-secondary, #57606a);
+                width: 20px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background-color: var(--pbi-color-background-lighter, #f6f8fa);
             }
             
             // Remove default marker
@@ -275,6 +318,10 @@
             
             &:hover {
                 background-color: var(--pbi-color-background-hover, rgba(0, 0, 0, 0.05));
+                
+                &::before {
+                    background-color: var(--pbi-color-background-hover, rgba(0, 0, 0, 0.1));
+                }
             }
             
             &:focus {
@@ -283,9 +330,10 @@
             }
         }
         
-        // When details is open, rotate the arrow
+        // When details is open, change to minus
         &[open] summary::before {
-            transform: translateY(-50%) rotate(90deg);
+            content: "−";
+            transform: translateY(-50%);
         }
         
         // Content wrapper inside details - single fluid container
@@ -297,24 +345,6 @@
             border-radius: 0 0 6px 6px;
             
             // Nested content styling
-            p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, code, pre, table {
-                margin: 0 0 16px 0;
-                font-family: inherit !important;
-                
-                &:last-child {
-                    margin-bottom: 0;
-                }
-            }
-        }
-        
-        // Fallback for details with single content element (no wrapper)
-        > *:not(summary):not(.details-content) {
-            padding: 16px;
-            margin: 0;
-            border-top: 1px solid var(--pbi-color-foreground-neutral-tertiary, #d0d7de);
-            background-color: var(--pbi-color-background, #ffffff);
-            border-radius: 0 0 6px 6px;
-            
             p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, code, pre, table {
                 margin: 0 0 16px 0;
                 font-family: inherit !important;

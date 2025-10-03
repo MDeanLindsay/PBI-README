@@ -1,7 +1,7 @@
 {
   "name": "ReadMe",
   "description": "A Power BI visual for displaying README and Markdown content",
-  "version": "1.0.0.0",
+  "version": "1.1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/mdeanlindsay/PBI-README"
