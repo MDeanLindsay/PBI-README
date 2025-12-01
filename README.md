@@ -391,7 +391,7 @@ README/
 
 ## Changelog
 
-### v1.1.0.1
+### v1.1.0.0
 - Added support for measure based markdown
 - Added landing page for supported features
 - Added styling for summary/detail drop downs
