@@ -11,8 +11,6 @@ ReadMe is a custom Power BI visual for displaying familiar, GitHub-styled **mark
 - [Current Release](#current-release)
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
-  - [Quick Start](#quick-start)
-  - [Importing Markdown](#importing-markdown)
 - [Supported Markdown Features](#supported-markdown-features)
 - [Formatting Options](#formatting-options)
 - [Development](#development)
@@ -182,6 +180,78 @@ This usually means there's a syntax error in your M code. Check that:
 
 ## Supported Markdown Features
 
+### Blockquotes
+Highlight important information or quotes.
+
+```markdown
+> This is a blockquote
+> 
+> It can span multiple lines
+> 
+> > And can be nested
+```
+
+**Example Output:**
+
+> This is a blockquote
+> 
+> It can span multiple lines
+> 
+> > And can be nested
+
+### Code Blocks
+Display code with syntax highlighting.
+
+````markdown
+```js
+function example() {
+    return "Hello World";
+}
+```
+````
+
+**Example Output:**
+
+```js
+function example() {
+    return "Hello World";
+}
+```
+
+### Details/Summary Dropdowns
+Create collapsible content sections.
+
+```markdown
+<details>
+<summary><strong>Click to expand</strong></summary>
+### Hidden Content
+This content is hidden by default and can be expanded by clicking the summary.
+</details>
+```
+
+**Example Output:**
+
+<details>
+<summary><strong>Click to expand</strong></summary>
+### Hidden Content
+This content is hidden by default and can be expanded by clicking the summary.
+</details>
+
+### Footnotes
+Add reference notes to your content.
+
+```markdown
+This is a sentence with a footnote[^1].
+
+[^1]: This is the footnote content.
+```
+
+**Example Output:**
+
+This is a sentence with a footnote[^1].
+
+[^1]: This is the footnote content.
+
 ### Headers
 Create hierarchical document structure with headers.
 
@@ -194,28 +264,25 @@ Create hierarchical document structure with headers.
 ###### Tiny Header (H6)
 ```
 
-### Text Formatting
-Emphasize text with bold, italic, and other formatting.
+**Example Output:**
+
+# Main Title (H1)
+## Section Title (H2)
+### Subsection (H3)
+#### Sub-subsection (H4)
+##### Small Header (H5)
+###### Tiny Header (H6)
+
+### Images
+Embed images in your markdown content.
 
 ```markdown
-**Bold text** and *italic text*
-***Bold and italic***
-~~Strikethrough text~~
-<u>Underlined text</u>
+![Alt text](https://example.com/image.png)
 ```
 
-### Lists
-Create ordered and unordered lists with proper nesting.
+**Example Output:**
 
-```markdown
-- Unordered list item
-- Another item
-  - Nested item
-
-1. Ordered list item
-2. Second item
-   1. Nested numbered item
-```
+![Alt text](https://example.com/image.png)
 
 ### Linked Indexes
 Create internal navigation links in your documentation. 
@@ -235,14 +302,47 @@ Here are our important numbers...
 ## Troubleshooting
 Common issues and solutions...
 ```
+
+**Example Output:**
+
+## Table of Contents
+* [Getting Started](#getting-started)
+* [Key Metrics](#key-metrics)
+* [Troubleshooting](#troubleshooting)
+
+## Getting Started
+This section explains how to begin...
+
+## Key Metrics
+Here are our important numbers...
+
+## Troubleshooting
+Common issues and solutions...
+
 > Note: The link #getting-started matches the header ## Getting Started (lowercase, spaces become hyphens).
 
-### Images
-Embed images in your markdown content.
+### Lists
+Create ordered and unordered lists with proper nesting.
 
 ```markdown
-![Alt text](https://example.com/image.png)
+- Unordered list item
+- Another item
+  - Nested item
+
+1. Ordered list item
+2. Second item
+   1. Nested numbered item
 ```
+
+**Example Output:**
+
+- Unordered list item
+- Another item
+  - Nested item
+
+1. Ordered list item
+2. Second item
+   1. Nested numbered item
 
 ### Tables
 Create structured data tables with alignment.
@@ -255,47 +355,13 @@ Create structured data tables with alignment.
 | More     | Content  | Here     |
 ```
 
-### Blockquotes
-Highlight important information or quotes.
+**Example Output:**
 
-```markdown
-> This is a blockquote
-> 
-> It can span multiple lines
-> 
-> > And can be nested
-```
-
-### Code Blocks
-Display code with syntax highlighting.
-
-```markdown
-    ```js
-    function example() {
-        return "Hello World";
-    }
-    ```
-```
-
-### Details/Summary Dropdowns
-Create collapsible content sections.
-
-```markdown
-<details>
-<summary><strong>Click to expand</strong></summary>
-### Hidden Content
-This content is hidden by default and can be expanded by clicking the summary.
-</details>
-```
-
-### Footnotes
-Add reference notes to your content.
-
-```markdown
-This is a sentence with a footnote[^1].
-
-[^1]: This is the footnote content.
-```
+| Header 1 | Header 2 | Header 3 |
+|----------|:--------:|---------:|
+| Left     | Center   | Right    |
+| Data     | Data     | Data     |
+| More     | Content  | Here     |
 
 ### Task Lists
 Create interactive checkboxes.
@@ -304,6 +370,28 @@ Create interactive checkboxes.
 - [x] Completed task
 - [ ] Incomplete task
 ```
+
+**Example Output:**
+
+- [x] Completed task
+- [ ] Incomplete task
+
+### Text Formatting
+Emphasize text with bold, italic, and other formatting.
+
+```markdown
+**Bold text** and *italic text*
+***Bold and italic***
+~~Strikethrough text~~
+<u>Underlined text</u>
+```
+
+**Example Output:**
+
+**Bold text** and *italic text*
+***Bold and italic***
+~~Strikethrough text~~
+<u>Underlined text</u>
 
 ## Formatting Options
 
