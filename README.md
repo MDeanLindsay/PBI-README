@@ -1,21 +1,19 @@
 # ReadMe - A Power BI Markdown Visual
 
-ReadMe is a custom Power BI visual for displaying familiar, GitHub-styled markdown content with full navigation support. Perfect for creating documentation dashboards, formatted release notes, and searchable data dictionaries in your Power BI reports.
-
-With the introduciton of `.pbip` files, Power BI now offers source control capabilities. Why not extend that same source control approach to your documentation in a format developers are familiar with? Store your markdown in a repository as the `README.md`, setup a connection with your report, and the visual will render your new data source without any additional tinkering needed.
+ReadMe is a custom Power BI visual for displaying familiar, GitHub-styled **markdown** content. Perfect for creating documentation dashboards, formatted release notes, and searchable data dictionaries in your Power BI reports.
 
 ### Current Release
 
-Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanLindsay/PBI-README/tree/main/README/dist).
+* Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanLindsay/PBI-README/tree/main/README/dist).
+* Current release on AppSource can be found [**here**](appsource.microsoft.com/en-us/product/saas/michaellindsay1750536687927.readme?tab=overview).
 
 ## Table of Contents
 - [Current Release](#current-release)
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
-  - [Using the Visual](#using-the-visual)
-  - [Data Requirements](#data-requirements)
-  - [Linked Indexes](#linked-indexes)
+  - [Quick Start](#quick-start)
   - [Importing Markdown](#importing-markdown)
+- [Supported Markdown Features](#supported-markdown-features)
 - [Formatting Options](#formatting-options)
 - [Development](#development)
 - [Contributing](#contributing)
@@ -26,73 +24,7 @@ Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanL
 
 ## Getting Started
 
-### Using the Visual
-
-1. **Import the Visual**: Install the `.pbiviz` file in your Power BI report, or find the visual in [AppSource](https://appsource.microsoft.com/en-us/product/power-bi-visuals/michaellindsay1750536687927.readme?tab=Overview) directly in Power BI.
-2. **Add Data**: Connect your markdown text data source
-3. **Map Fields**: Drag your markdown text field to the "Markdown Text" data role
-4. **Customize**: Use the formatting pane to adjust appearance
-
-![ReadMe Visual Example](/README/assets/readme_example.PNG)
-
-### Data Requirements
-
-The visual expects a single text field containing valid markdown. (No you can't use measures. Put it in a single cell in a table.)
-
-```markdown
-# My Report
-
-## Table of Contents
-* [Overview](#overview)
-* [Key Metrics](#key-metrics)
-* [Conclusions](#conclusions)
-
-## Overview
-This report shows...
-
-## Key Metrics
-- Metric 1: 95%
-- Metric 2: $1.2M
-- Metric 3: 15% increase
-
-## Conclusions
-Based on our analysis...
-```
-
-### Linked Indexes
-
-The visual supports GitHub-style linked indexes for easy navigation. To create clickable links that jump to specific sections:
-
-1. **Create your headers** with standard markdown syntax (`#`, `##`, `###`, etc.)
-2. **Create your links** using the format `[Link Text](#header-text)`
-3. **Convert header text to link format** by:
-   - Converting to lowercase
-   - Replacing spaces with hyphens
-   - Removing special characters
-
-**Example:**
-```markdown
-## Table of Contents
-* [Getting Started](#getting-started)
-* [Key Metrics](#key-metrics)
-* [Troubleshooting](#troubleshooting)
-
-## Getting Started
-This section explains how to begin...
-
-## Key Metrics
-Here are our important numbers...
-
-## Troubleshooting
-Common issues and solutions...
-```
-
-> **Note:** The link `#getting-started` matches the header `## Getting Started` (lowercase, spaces become hyphens).
-
-
-### Importing Markdown
-
-While there are many ways to import your markdown, the section below outlines best practices to import your raw markdown into PowerBi.
+While there are many ways to import your markdown, the sections below outlines best practices to import your raw markdown into PowerBi.
 
 <details>
 <summary><strong>Option 1: Connect Power BI to Private GitHub README</strong></summary>
@@ -173,7 +105,29 @@ This usually means Power BI has cached old or incorrect credentials.
 Not interested in using a repository? I get it.
 This guide shows you how to create a simple data source by copying and pasting your markdown content directly into Power BI.
 
-#### Step 1: Create a New Query in Power BI
+## Option 1: Measures
+Create a measure that returns markdown text and drag it to the **Text Measure** input.
+
+```m
+Markdown_Measure = "
+
+# Sales Dashboard
+
+## Executive Summary
+Our Q4 performance shows **strong growth** across all regions.
+
+### Key Highlights
+1. Revenue increased by 15%
+2. Customer retention at 95%
+3. New market expansion successful
+
+"
+```
+> Note: Make sure to escape any double quotes within your markdown by doubling them (e.g., ""quoted text"").
+
+## Option 2: Create a New Query in Power BI
+
+#### Step 1: Create A New Blank Query
 
 1. In Power BI Desktop, navigate to **Get Data** > **Blank Query**. This will open the Power Query Editor.
 2. With the new query selected, click on **Advanced Editor** from the ribbon.
@@ -206,7 +160,7 @@ in
     Source
 ```
 
-> **Note:** Replace the markdown content between the double quotes with your own markdown text. Make sure to escape any double quotes within your markdown by doubling them (e.g., `""quoted text""`).
+> **Note:** Replace the markdown content between the double quotes with your own markdown text. Again, make sure to escape any double quotes within your markdown by doubling them (e.g., `""quoted text""`).
 
 #### Step 3: Save and Apply
 
@@ -225,6 +179,124 @@ This usually means there's a syntax error in your M code. Check that:
 2. Double quotes within your markdown are escaped. Use `""` instead of `"`
 3. The table structure is correct: `#table({"Content"}, {{"your markdown"}})`
 </details>
+
+## Supported Markdown Features
+
+### Headers
+Create hierarchical document structure with headers.
+
+```markdown
+# Main Title (H1)
+## Section Title (H2)
+### Subsection (H3)
+#### Sub-subsection (H4)
+##### Small Header (H5)
+###### Tiny Header (H6)
+```
+
+### Text Formatting
+Emphasize text with bold, italic, and other formatting.
+
+```markdown
+**Bold text** and *italic text*
+***Bold and italic***
+~~Strikethrough text~~
+<u>Underlined text</u>
+```
+
+### Lists
+Create ordered and unordered lists with proper nesting.
+
+```markdown
+- Unordered list item
+- Another item
+  - Nested item
+
+1. Ordered list item
+2. Second item
+   1. Nested numbered item
+```
+
+### Linked Indexes
+Create internal navigation links in your documentation. 
+
+Create your headers with standard markdown syntax (`#`, `##`, `###`, etc.), then create your links using the format `[Link Text](#header-text)`. Convert header text to link format by: converting to lowercase, replacing spaces with hyphens, removing special characters.
+
+**Example:**
+```markdown
+## Table of Contents
+* [Getting Started](#getting-started)
+* [Key Metrics](#key-metrics)
+* [Troubleshooting](#troubleshooting)
+```
+
+### Images
+Embed images in your markdown content.
+
+```markdown
+![Alt text](https://example.com/image.png)
+```
+
+### Tables
+Create structured data tables with alignment.
+
+```markdown
+| Header 1 | Header 2 | Header 3 |
+|----------|:--------:|---------:|
+| Left     | Center   | Right    |
+| Data     | Data     | Data     |
+| More     | Content  | Here     |
+```
+
+### Blockquotes
+Highlight important information or quotes.
+
+```markdown
+> This is a blockquote
+> 
+> It can span multiple lines
+> 
+> > And can be nested
+```
+
+### Code Blocks
+Display code with syntax highlighting.
+
+```markdown
+    ```js
+    function example() {
+        return "Hello World";
+    }
+    ```
+```
+
+### Details/Summary Dropdowns
+Create collapsible content sections.
+
+```markdown
+<details>
+<summary><strong>Click to expand</strong></summary>
+### Hidden Content
+This content is hidden by default and can be expanded by clicking the summary.
+</details>
+```
+
+### Footnotes
+Add reference notes to your content.
+
+```markdown
+This is a sentence with a footnote[^1].
+
+[^1]: This is the footnote content.
+```
+
+### Task Lists
+Create interactive checkboxes.
+
+```markdown
+- [x] Completed task
+- [ ] Incomplete task
+```
 
 ## Formatting Options
 
@@ -312,6 +384,10 @@ README/
 
 ## Changelog
 
+### v1.1.0.1
+- Added support for measure based markdown
+- Added landing page for supported features
+- Added styling for summary/detail drop downs
 ### v1.0.0.0
 - Initial release
 
