@@ -220,15 +220,22 @@ Create ordered and unordered lists with proper nesting.
 ### Linked Indexes
 Create internal navigation links in your documentation. 
 
-Create your headers with standard markdown syntax (`#`, `##`, `###`, etc.), then create your links using the format `[Link Text](#header-text)`. Convert header text to link format by: converting to lowercase, replacing spaces with hyphens, removing special characters.
-
-**Example:**
 ```markdown
 ## Table of Contents
 * [Getting Started](#getting-started)
 * [Key Metrics](#key-metrics)
 * [Troubleshooting](#troubleshooting)
+
+## Getting Started
+This section explains how to begin...
+
+## Key Metrics
+Here are our important numbers...
+
+## Troubleshooting
+Common issues and solutions...
 ```
+> Note: The link #getting-started matches the header ## Getting Started (lowercase, spaces become hyphens).
 
 ### Images
 Embed images in your markdown content.
