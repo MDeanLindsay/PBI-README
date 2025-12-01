@@ -224,7 +224,9 @@ Create collapsible content sections.
 ```markdown
 <details>
 <summary><strong>Click to expand</strong></summary>
+
 ### Hidden Content
+
 This content is hidden by default and can be expanded by clicking the summary.
 </details>
 ```
@@ -233,7 +235,9 @@ This content is hidden by default and can be expanded by clicking the summary.
 
 <details>
 <summary><strong>Click to expand</strong></summary>
+
 ### Hidden Content
+
 This content is hidden by default and can be expanded by clicking the summary.
 </details>
 
