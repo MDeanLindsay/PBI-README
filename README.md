@@ -5,7 +5,7 @@ ReadMe is a custom Power BI visual for displaying familiar, GitHub-styled **mark
 ### Current Release
 
 * Current .pbiviz and example .pbix available [**here**](https://github.com/MDeanLindsay/PBI-README/tree/main/README/dist).
-* Current release on AppSource can be found [**here**](appsource.microsoft.com/en-us/product/saas/michaellindsay1750536687927.readme?tab=overview).
+* Current release on AppSource can be found [**here**](https://appsource.microsoft.com/en-us/product/saas/michaellindsay1750536687927.readme?tab=overview).
 
 ## Table of Contents
 - [Current Release](#current-release)
@@ -210,13 +210,13 @@ function example() {
 ```
 ````
 
-**Example Output:**
+**Output:**
 
-```js
-function example() {
-    return "Hello World";
-}
-```
+> ```js
+> function example() {
+>     return "Hello World";
+> }
+> ```
 
 ### Details/Summary Dropdowns
 Create collapsible content sections.
@@ -231,15 +231,15 @@ This content is hidden by default and can be expanded by clicking the summary.
 </details>
 ```
 
-**Example Output:**
+**Output:**
 
-<details>
-<summary><strong>Click to expand</strong></summary>
-
-### Hidden Content
-
-This content is hidden by default and can be expanded by clicking the summary.
-</details>
+> <details>
+> <summary><strong>Click to expand</strong></summary>
+> 
+> ### Hidden Content
+> 
+> This content is hidden by default and can be expanded by clicking the summary.
+> </details>
 
 ### Footnotes
 Add reference notes to your content.
@@ -250,11 +250,11 @@ This is a sentence with a footnote[^1].
 [^1]: This is the footnote content.
 ```
 
-**Example Output:**
+**Output:**
 
-This is a sentence with a footnote[^1].
-
-[^1]: This is the footnote content.
+> This is a sentence with a footnote[^1].
+> 
+> [^1]: This is the footnote content.
 
 ### Headers
 Create hierarchical document structure with headers.
@@ -268,14 +268,14 @@ Create hierarchical document structure with headers.
 ###### Tiny Header (H6)
 ```
 
-**Example Output:**
+**Output:**
 
-# Main Title (H1)
-## Section Title (H2)
-### Subsection (H3)
-#### Sub-subsection (H4)
-##### Small Header (H5)
-###### Tiny Header (H6)
+> # Main Title (H1)
+> ## Section Title (H2)
+> ### Subsection (H3)
+> #### Sub-subsection (H4)
+> ##### Small Header (H5)
+> ###### Tiny Header (H6)
 
 ### Images
 Embed images in your markdown content.
@@ -284,9 +284,9 @@ Embed images in your markdown content.
 ![Alt text](https://example.com/image.png)
 ```
 
-**Example Output:**
+**Output:**
 
-![Alt text](https://example.com/image.png)
+> ![Alt text](https://raw.githubusercontent.com/MDeanLindsay/PBI-README/refs/heads/main/README/assets/icon_300px.png)
 
 ### Linked Indexes
 Create internal navigation links in your documentation. 
@@ -294,36 +294,21 @@ Create internal navigation links in your documentation.
 ```markdown
 ## Table of Contents
 * [Getting Started](#getting-started)
-* [Key Metrics](#key-metrics)
-* [Troubleshooting](#troubleshooting)
 
 ## Getting Started
 This section explains how to begin...
 
-## Key Metrics
-Here are our important numbers...
-
-## Troubleshooting
-Common issues and solutions...
 ```
-
-**Example Output:**
-
-## Table of Contents
-* [Getting Started](#getting-started)
-* [Key Metrics](#key-metrics)
-* [Troubleshooting](#troubleshooting)
-
-## Getting Started
-This section explains how to begin...
-
-## Key Metrics
-Here are our important numbers...
-
-## Troubleshooting
-Common issues and solutions...
-
 > Note: The link #getting-started matches the header ## Getting Started (lowercase, spaces become hyphens).
+
+**Output:**
+
+> ## Table of Contents
+> * [Getting Started](#getting-started-test)
+> 
+> ## Getting Started Test
+> This section explains how to begin...
+
 
 ### Lists
 Create ordered and unordered lists with proper nesting.
@@ -338,15 +323,14 @@ Create ordered and unordered lists with proper nesting.
    1. Nested numbered item
 ```
 
-**Example Output:**
-
-- Unordered list item
-- Another item
-  - Nested item
-
-1. Ordered list item
-2. Second item
-   1. Nested numbered item
+**Output:**
+> - Unordered list item
+> - Another item
+>   - Nested item
+> 
+> 1. Ordered list item
+> 2. Second item
+>    1. Nested numbered item
 
 ### Tables
 Create structured data tables with alignment.
@@ -359,13 +343,13 @@ Create structured data tables with alignment.
 | More     | Content  | Here     |
 ```
 
-**Example Output:**
+**Output:**
 
-| Header 1 | Header 2 | Header 3 |
-|----------|:--------:|---------:|
-| Left     | Center   | Right    |
-| Data     | Data     | Data     |
-| More     | Content  | Here     |
+> | Header 1 | Header 2 | Header 3 |
+> |----------|:--------:|---------:|
+> | Left     | Center   | Right    |
+> | Data     | Data     | Data     |
+> | More     | Content  | Here     |
 
 ### Task Lists
 Create interactive checkboxes.
@@ -375,27 +359,28 @@ Create interactive checkboxes.
 - [ ] Incomplete task
 ```
 
-**Example Output:**
+**Output:**
 
-- [x] Completed task
-- [ ] Incomplete task
+> - [x] Completed task
+> - [ ] Incomplete task
 
 ### Text Formatting
 Emphasize text with bold, italic, and other formatting.
 
 ```markdown
-**Bold text** and *italic text*
+**Bold text** 
+*italic text*
 ***Bold and italic***
 ~~Strikethrough text~~
 <u>Underlined text</u>
 ```
+**Output:** 
 
-**Example Output:**
-
-**Bold text** and *italic text*
-***Bold and italic***
-~~Strikethrough text~~
-<u>Underlined text</u>
+> **Bold text** <br>
+> *italic text* <br>
+> ***Bold and italic*** <br>
+> ~~Strikethrough text~~ <br>
+> <u>Underlined text</u>
 
 ## Formatting Options
 
